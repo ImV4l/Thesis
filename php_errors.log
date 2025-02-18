@@ -1,0 +1,241 @@
+[24-Jan-2025 13:39:12 Europe/Berlin] [MQTT] Attempting connection with client ID: php-client-679389f028295
+[24-Jan-2025 13:39:12 Europe/Berlin] [MQTT] Successfully connected to broker
+[24-Jan-2025 13:39:12 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\sa_management_system\vendor\bluerhinos\phpmqtt\phpMQTT.php on line 328
+[24-Jan-2025 13:39:12 Europe/Berlin] [Fingerprint] Received action: initialize
+[24-Jan-2025 13:39:12 Europe/Berlin] [MQTT] Attempting connection with client ID: php-client-679389f028295
+[24-Jan-2025 13:39:12 Europe/Berlin] [MQTT] Successfully connected to broker
+[24-Jan-2025 13:39:12 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\sa_management_system\vendor\bluerhinos\phpmqtt\phpMQTT.php on line 328
+[24-Jan-2025 13:39:12 Europe/Berlin] [Fingerprint] Connection attempt 1 of 3
+[24-Jan-2025 13:39:12 Europe/Berlin] [MQTT] Attempting connection with client ID: php-client-679389f028295
+[24-Jan-2025 13:39:12 Europe/Berlin] [MQTT] Successfully connected to broker
+[24-Jan-2025 13:39:12 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\sa_management_system\vendor\bluerhinos\phpmqtt\phpMQTT.php on line 328
+[24-Jan-2025 13:39:12 Europe/Berlin] [Fingerprint] Connection successful
+[24-Jan-2025 13:39:14 Europe/Berlin] [MQTT] Attempting connection with client ID: php-client-679389f238a3a
+[24-Jan-2025 13:39:14 Europe/Berlin] [MQTT] Successfully connected to broker
+[24-Jan-2025 13:39:14 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\sa_management_system\vendor\bluerhinos\phpmqtt\phpMQTT.php on line 328
+[24-Jan-2025 13:39:14 Europe/Berlin] [Fingerprint] Received action: initialize
+[24-Jan-2025 13:39:14 Europe/Berlin] [MQTT] Attempting connection with client ID: php-client-679389f238a3a
+[24-Jan-2025 13:39:14 Europe/Berlin] [MQTT] Successfully connected to broker
+[24-Jan-2025 13:39:14 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\sa_management_system\vendor\bluerhinos\phpmqtt\phpMQTT.php on line 328
+[24-Jan-2025 13:39:14 Europe/Berlin] [Fingerprint] Connection attempt 1 of 3
+[24-Jan-2025 13:39:14 Europe/Berlin] [MQTT] Attempting connection with client ID: php-client-679389f238a3a
+[24-Jan-2025 13:39:14 Europe/Berlin] [MQTT] Successfully connected to broker
+[24-Jan-2025 13:39:14 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\sa_management_system\vendor\bluerhinos\phpmqtt\phpMQTT.php on line 328
+[24-Jan-2025 13:39:14 Europe/Berlin] [Fingerprint] Connection successful
+[24-Jan-2025 13:39:16 Europe/Berlin] [MQTT] Attempting connection with client ID: php-client-679389f443ff5
+[24-Jan-2025 13:39:16 Europe/Berlin] [MQTT] Successfully connected to broker
+[24-Jan-2025 13:39:16 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\sa_management_system\vendor\bluerhinos\phpmqtt\phpMQTT.php on line 328
+[24-Jan-2025 13:39:16 Europe/Berlin] [Fingerprint] Received action: initialize
+[24-Jan-2025 13:39:16 Europe/Berlin] [MQTT] Attempting connection with client ID: php-client-679389f443ff5
+[24-Jan-2025 13:39:16 Europe/Berlin] [MQTT] Successfully connected to broker
+[24-Jan-2025 13:39:16 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\sa_management_system\vendor\bluerhinos\phpmqtt\phpMQTT.php on line 328
+[24-Jan-2025 13:39:16 Europe/Berlin] [Fingerprint] Connection attempt 1 of 3
+[24-Jan-2025 13:39:16 Europe/Berlin] [MQTT] Attempting connection with client ID: php-client-679389f443ff5
+[24-Jan-2025 13:39:16 Europe/Berlin] [MQTT] Successfully connected to broker
+[24-Jan-2025 13:39:16 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\sa_management_system\vendor\bluerhinos\phpmqtt\phpMQTT.php on line 328
+[24-Jan-2025 13:39:16 Europe/Berlin] [Fingerprint] Connection successful
+[24-Jan-2025 13:39:18 Europe/Berlin] [MQTT] Attempting connection with client ID: php-client-679389f654ee0
+[24-Jan-2025 13:39:18 Europe/Berlin] [MQTT] Successfully connected to broker
+[24-Jan-2025 13:39:18 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\sa_management_system\vendor\bluerhinos\phpmqtt\phpMQTT.php on line 328
+[24-Jan-2025 13:39:18 Europe/Berlin] [Fingerprint] Received action: initialize
+[24-Jan-2025 13:39:18 Europe/Berlin] [MQTT] Attempting connection with client ID: php-client-679389f654ee0
+[24-Jan-2025 13:39:18 Europe/Berlin] [MQTT] Successfully connected to broker
+[24-Jan-2025 13:39:18 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\sa_management_system\vendor\bluerhinos\phpmqtt\phpMQTT.php on line 328
+[24-Jan-2025 13:39:18 Europe/Berlin] [Fingerprint] Connection attempt 1 of 3
+[24-Jan-2025 13:39:18 Europe/Berlin] [MQTT] Attempting connection with client ID: php-client-679389f654ee0
+[24-Jan-2025 13:39:18 Europe/Berlin] [MQTT] Successfully connected to broker
+[24-Jan-2025 13:39:18 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\sa_management_system\vendor\bluerhinos\phpmqtt\phpMQTT.php on line 328
+[24-Jan-2025 13:39:18 Europe/Berlin] [Fingerprint] Connection successful
+[24-Jan-2025 13:39:20 Europe/Berlin] [MQTT] Attempting connection with client ID: php-client-679389f87b451
+[24-Jan-2025 13:39:20 Europe/Berlin] [MQTT] Successfully connected to broker
+[24-Jan-2025 13:39:20 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\sa_management_system\vendor\bluerhinos\phpmqtt\phpMQTT.php on line 328
+[24-Jan-2025 13:39:20 Europe/Berlin] [Fingerprint] Received action: initialize
+[24-Jan-2025 13:39:20 Europe/Berlin] [MQTT] Attempting connection with client ID: php-client-679389f87b451
+[24-Jan-2025 13:39:20 Europe/Berlin] [MQTT] Successfully connected to broker
+[24-Jan-2025 13:39:20 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\sa_management_system\vendor\bluerhinos\phpmqtt\phpMQTT.php on line 328
+[24-Jan-2025 13:39:20 Europe/Berlin] [Fingerprint] Connection attempt 1 of 3
+[24-Jan-2025 13:39:20 Europe/Berlin] [MQTT] Attempting connection with client ID: php-client-679389f87b451
+[24-Jan-2025 13:39:20 Europe/Berlin] [MQTT] Successfully connected to broker
+[24-Jan-2025 13:39:20 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\sa_management_system\vendor\bluerhinos\phpmqtt\phpMQTT.php on line 328
+[24-Jan-2025 13:39:20 Europe/Berlin] [Fingerprint] Connection successful
+[24-Jan-2025 13:41:34 Europe/Berlin] [MQTT] Attempting connection with client ID: php-client-67938a7ec890a
+[24-Jan-2025 13:41:34 Europe/Berlin] [MQTT] Successfully connected to broker
+[24-Jan-2025 13:41:34 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\sa_management_system\vendor\bluerhinos\phpmqtt\phpMQTT.php on line 328
+[24-Jan-2025 13:41:34 Europe/Berlin] [Fingerprint] Received action: initialize
+[24-Jan-2025 13:41:34 Europe/Berlin] [Fingerprint] Connection attempt 1 of 3
+[24-Jan-2025 13:41:34 Europe/Berlin] [MQTT] Attempting connection with client ID: php-client-67938a7ec890a
+[24-Jan-2025 13:41:34 Europe/Berlin] [MQTT] Successfully connected to broker
+[24-Jan-2025 13:41:34 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\sa_management_system\vendor\bluerhinos\phpmqtt\phpMQTT.php on line 328
+[24-Jan-2025 13:41:36 Europe/Berlin] [MQTT] Attempting connection with client ID: php-client-67938a80d8a12
+[24-Jan-2025 13:41:36 Europe/Berlin] [MQTT] Successfully connected to broker
+[24-Jan-2025 13:41:36 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\sa_management_system\vendor\bluerhinos\phpmqtt\phpMQTT.php on line 328
+[24-Jan-2025 13:41:36 Europe/Berlin] [Fingerprint] Received action: initialize
+[24-Jan-2025 13:41:36 Europe/Berlin] [Fingerprint] Connection attempt 1 of 3
+[24-Jan-2025 13:41:36 Europe/Berlin] [MQTT] Attempting connection with client ID: php-client-67938a80d8a12
+[24-Jan-2025 13:41:36 Europe/Berlin] [MQTT] Successfully connected to broker
+[24-Jan-2025 13:41:36 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\sa_management_system\vendor\bluerhinos\phpmqtt\phpMQTT.php on line 328
+[24-Jan-2025 13:41:40 Europe/Berlin] [MQTT] Attempting connection with client ID: php-client-67938a84f2f63
+[24-Jan-2025 13:41:41 Europe/Berlin] [MQTT] Successfully connected to broker
+[24-Jan-2025 13:41:41 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\sa_management_system\vendor\bluerhinos\phpmqtt\phpMQTT.php on line 328
+[24-Jan-2025 13:41:41 Europe/Berlin] [Fingerprint] Received action: initialize
+[24-Jan-2025 13:41:41 Europe/Berlin] [Fingerprint] Connection attempt 1 of 3
+[24-Jan-2025 13:41:41 Europe/Berlin] [MQTT] Attempting connection with client ID: php-client-67938a84f2f63
+[24-Jan-2025 13:41:41 Europe/Berlin] [MQTT] Successfully connected to broker
+[24-Jan-2025 13:41:41 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\sa_management_system\vendor\bluerhinos\phpmqtt\phpMQTT.php on line 328
+[24-Jan-2025 13:41:47 Europe/Berlin] [MQTT] Attempting connection with client ID: php-client-67938a8b7addc
+[24-Jan-2025 13:41:47 Europe/Berlin] [MQTT] Successfully connected to broker
+[24-Jan-2025 13:41:47 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\sa_management_system\vendor\bluerhinos\phpmqtt\phpMQTT.php on line 328
+[24-Jan-2025 13:41:47 Europe/Berlin] [Fingerprint] Received action: initialize
+[24-Jan-2025 13:41:47 Europe/Berlin] [Fingerprint] Connection attempt 1 of 3
+[24-Jan-2025 13:41:47 Europe/Berlin] [MQTT] Attempting connection with client ID: php-client-67938a8b7addc
+[24-Jan-2025 13:41:47 Europe/Berlin] [MQTT] Successfully connected to broker
+[24-Jan-2025 13:41:47 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\sa_management_system\vendor\bluerhinos\phpmqtt\phpMQTT.php on line 328
+[24-Jan-2025 13:41:56 Europe/Berlin] [MQTT] Attempting connection with client ID: php-client-67938a9477390
+[24-Jan-2025 13:41:56 Europe/Berlin] [MQTT] Successfully connected to broker
+[24-Jan-2025 13:41:56 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\sa_management_system\vendor\bluerhinos\phpmqtt\phpMQTT.php on line 328
+[24-Jan-2025 13:41:56 Europe/Berlin] [Fingerprint] Received action: initialize
+[24-Jan-2025 13:41:56 Europe/Berlin] [Fingerprint] Connection attempt 1 of 3
+[24-Jan-2025 13:41:56 Europe/Berlin] [MQTT] Attempting connection with client ID: php-client-67938a9477390
+[24-Jan-2025 13:41:56 Europe/Berlin] [MQTT] Successfully connected to broker
+[24-Jan-2025 13:41:56 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\sa_management_system\vendor\bluerhinos\phpmqtt\phpMQTT.php on line 328
+[24-Jan-2025 13:44:50 Europe/Berlin] [MQTT] Attempting connection with client ID: php-client-67938b42d0f40
+[24-Jan-2025 13:44:50 Europe/Berlin] [MQTT] Successfully connected to broker
+[24-Jan-2025 13:44:50 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\sa_management_system\vendor\bluerhinos\phpmqtt\phpMQTT.php on line 328
+[24-Jan-2025 13:44:50 Europe/Berlin] [Fingerprint] Received action: initialize
+[24-Jan-2025 13:44:50 Europe/Berlin] [Fingerprint] Connection attempt 1 of 3
+[24-Jan-2025 13:44:50 Europe/Berlin] [MQTT] Attempting connection with client ID: php-client-67938b42d0f40
+[24-Jan-2025 13:44:50 Europe/Berlin] [MQTT] Successfully connected to broker
+[24-Jan-2025 13:44:50 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\sa_management_system\vendor\bluerhinos\phpmqtt\phpMQTT.php on line 328
+[24-Jan-2025 13:44:52 Europe/Berlin] [MQTT] Attempting connection with client ID: php-client-67938b44e536b
+[24-Jan-2025 13:44:52 Europe/Berlin] [MQTT] Successfully connected to broker
+[24-Jan-2025 13:44:52 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\sa_management_system\vendor\bluerhinos\phpmqtt\phpMQTT.php on line 328
+[24-Jan-2025 13:44:52 Europe/Berlin] [Fingerprint] Received action: initialize
+[24-Jan-2025 13:44:52 Europe/Berlin] [Fingerprint] Connection attempt 1 of 3
+[24-Jan-2025 13:44:52 Europe/Berlin] [MQTT] Attempting connection with client ID: php-client-67938b44e536b
+[24-Jan-2025 13:44:52 Europe/Berlin] [MQTT] Successfully connected to broker
+[24-Jan-2025 13:44:52 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\sa_management_system\vendor\bluerhinos\phpmqtt\phpMQTT.php on line 328
+[24-Jan-2025 13:53:56 Europe/Berlin] [MQTT] Attempting connection with client ID: php-client-67938d64d596d
+[24-Jan-2025 13:53:56 Europe/Berlin] [MQTT] Successfully connected to broker
+[24-Jan-2025 13:53:56 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\sa_management_system\vendor\bluerhinos\phpmqtt\phpMQTT.php on line 328
+[24-Jan-2025 13:53:56 Europe/Berlin] [MQTT] Connection error: Failed to subscribe to fingerprint topic
+[24-Jan-2025 13:53:56 Europe/Berlin] [Fingerprint] Received action: initialize
+[24-Jan-2025 13:53:56 Europe/Berlin] [Fingerprint] Connection attempt 1 of 3
+[24-Jan-2025 13:53:56 Europe/Berlin] [MQTT] Attempting connection with client ID: php-client-67938d64d596d
+[24-Jan-2025 13:53:56 Europe/Berlin] [MQTT] Successfully connected to broker
+[24-Jan-2025 13:53:56 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\sa_management_system\vendor\bluerhinos\phpmqtt\phpMQTT.php on line 328
+[24-Jan-2025 13:53:56 Europe/Berlin] [MQTT] Connection error: Failed to subscribe to fingerprint topic
+[24-Jan-2025 13:53:57 Europe/Berlin] [Fingerprint] Connection attempt 2 of 3
+[24-Jan-2025 13:53:57 Europe/Berlin] [MQTT] Attempting connection with client ID: php-client-67938d64d596d
+[24-Jan-2025 13:53:57 Europe/Berlin] [MQTT] Successfully connected to broker
+[24-Jan-2025 13:53:57 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\sa_management_system\vendor\bluerhinos\phpmqtt\phpMQTT.php on line 328
+[24-Jan-2025 13:53:57 Europe/Berlin] [MQTT] Connection error: Failed to subscribe to fingerprint topic
+[24-Jan-2025 13:53:59 Europe/Berlin] [Fingerprint] Connection attempt 3 of 3
+[24-Jan-2025 13:53:59 Europe/Berlin] [MQTT] Attempting connection with client ID: php-client-67938d64d596d
+[24-Jan-2025 13:53:59 Europe/Berlin] [MQTT] Successfully connected to broker
+[24-Jan-2025 13:53:59 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\sa_management_system\vendor\bluerhinos\phpmqtt\phpMQTT.php on line 328
+[24-Jan-2025 13:53:59 Europe/Berlin] [MQTT] Connection error: Failed to subscribe to fingerprint topic
+[24-Jan-2025 13:55:25 Europe/Berlin] [MQTT] Attempting connection with client ID: php-client-67938dbd7b9d9
+[24-Jan-2025 13:55:25 Europe/Berlin] [MQTT] Successfully connected to broker
+[24-Jan-2025 13:55:25 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\sa_management_system\vendor\bluerhinos\phpmqtt\phpMQTT.php on line 328
+[24-Jan-2025 13:55:25 Europe/Berlin] [MQTT] Connection error: Failed to subscribe to fingerprint topic
+[24-Jan-2025 13:55:25 Europe/Berlin] [Fingerprint] Received action: initialize
+[24-Jan-2025 13:55:25 Europe/Berlin] [Fingerprint] Connection attempt 1 of 3
+[24-Jan-2025 13:55:25 Europe/Berlin] [MQTT] Attempting connection with client ID: php-client-67938dbd7b9d9
+[24-Jan-2025 13:55:25 Europe/Berlin] [MQTT] Successfully connected to broker
+[24-Jan-2025 13:55:25 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\sa_management_system\vendor\bluerhinos\phpmqtt\phpMQTT.php on line 328
+[24-Jan-2025 13:55:25 Europe/Berlin] [MQTT] Connection error: Failed to subscribe to fingerprint topic
+[24-Jan-2025 13:55:26 Europe/Berlin] [Fingerprint] Connection attempt 2 of 3
+[24-Jan-2025 13:55:26 Europe/Berlin] [MQTT] Attempting connection with client ID: php-client-67938dbd7b9d9
+[24-Jan-2025 13:55:26 Europe/Berlin] [MQTT] Successfully connected to broker
+[24-Jan-2025 13:55:26 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\sa_management_system\vendor\bluerhinos\phpmqtt\phpMQTT.php on line 328
+[24-Jan-2025 13:55:26 Europe/Berlin] [MQTT] Connection error: Failed to subscribe to fingerprint topic
+[24-Jan-2025 13:55:28 Europe/Berlin] [Fingerprint] Connection attempt 3 of 3
+[24-Jan-2025 13:55:28 Europe/Berlin] [MQTT] Attempting connection with client ID: php-client-67938dbd7b9d9
+[24-Jan-2025 13:55:28 Europe/Berlin] [MQTT] Successfully connected to broker
+[24-Jan-2025 13:55:28 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\sa_management_system\vendor\bluerhinos\phpmqtt\phpMQTT.php on line 328
+[24-Jan-2025 13:55:28 Europe/Berlin] [MQTT] Connection error: Failed to subscribe to fingerprint topic
+[24-Jan-2025 13:55:31 Europe/Berlin] [MQTT] Attempting connection with client ID: php-client-67938dc37ce41
+[24-Jan-2025 13:55:31 Europe/Berlin] [MQTT] Successfully connected to broker
+[24-Jan-2025 13:55:31 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\sa_management_system\vendor\bluerhinos\phpmqtt\phpMQTT.php on line 328
+[24-Jan-2025 13:55:31 Europe/Berlin] [MQTT] Connection error: Failed to subscribe to fingerprint topic
+[24-Jan-2025 13:55:31 Europe/Berlin] [Fingerprint] Received action: initialize
+[24-Jan-2025 13:55:31 Europe/Berlin] [Fingerprint] Connection attempt 1 of 3
+[24-Jan-2025 13:55:31 Europe/Berlin] [MQTT] Attempting connection with client ID: php-client-67938dc37ce41
+[24-Jan-2025 13:55:31 Europe/Berlin] [MQTT] Successfully connected to broker
+[24-Jan-2025 13:55:31 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\sa_management_system\vendor\bluerhinos\phpmqtt\phpMQTT.php on line 328
+[24-Jan-2025 13:55:31 Europe/Berlin] [MQTT] Connection error: Failed to subscribe to fingerprint topic
+[24-Jan-2025 13:55:32 Europe/Berlin] [Fingerprint] Connection attempt 2 of 3
+[24-Jan-2025 13:55:32 Europe/Berlin] [MQTT] Attempting connection with client ID: php-client-67938dc37ce41
+[24-Jan-2025 13:55:32 Europe/Berlin] [MQTT] Successfully connected to broker
+[24-Jan-2025 13:55:32 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\sa_management_system\vendor\bluerhinos\phpmqtt\phpMQTT.php on line 328
+[24-Jan-2025 13:55:32 Europe/Berlin] [MQTT] Connection error: Failed to subscribe to fingerprint topic
+[24-Jan-2025 13:55:34 Europe/Berlin] [Fingerprint] Connection attempt 3 of 3
+[24-Jan-2025 13:55:34 Europe/Berlin] [MQTT] Attempting connection with client ID: php-client-67938dc37ce41
+[24-Jan-2025 13:55:34 Europe/Berlin] [MQTT] Successfully connected to broker
+[24-Jan-2025 13:55:34 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\sa_management_system\vendor\bluerhinos\phpmqtt\phpMQTT.php on line 328
+[24-Jan-2025 13:55:34 Europe/Berlin] [MQTT] Connection error: Failed to subscribe to fingerprint topic
+[24-Jan-2025 13:55:39 Europe/Berlin] [MQTT] Attempting connection with client ID: php-client-67938dcb75f5d
+[24-Jan-2025 13:55:39 Europe/Berlin] [MQTT] Successfully connected to broker
+[24-Jan-2025 13:55:39 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\sa_management_system\vendor\bluerhinos\phpmqtt\phpMQTT.php on line 328
+[24-Jan-2025 13:55:39 Europe/Berlin] [MQTT] Connection error: Failed to subscribe to fingerprint topic
+[24-Jan-2025 13:55:39 Europe/Berlin] [Fingerprint] Received action: initialize
+[24-Jan-2025 13:55:39 Europe/Berlin] [Fingerprint] Connection attempt 1 of 3
+[24-Jan-2025 13:55:39 Europe/Berlin] [MQTT] Attempting connection with client ID: php-client-67938dcb75f5d
+[24-Jan-2025 13:55:39 Europe/Berlin] [MQTT] Successfully connected to broker
+[24-Jan-2025 13:55:39 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\sa_management_system\vendor\bluerhinos\phpmqtt\phpMQTT.php on line 328
+[24-Jan-2025 13:55:39 Europe/Berlin] [MQTT] Connection error: Failed to subscribe to fingerprint topic
+[24-Jan-2025 13:55:40 Europe/Berlin] [Fingerprint] Connection attempt 2 of 3
+[24-Jan-2025 13:55:40 Europe/Berlin] [MQTT] Attempting connection with client ID: php-client-67938dcb75f5d
+[24-Jan-2025 13:55:40 Europe/Berlin] [MQTT] Successfully connected to broker
+[24-Jan-2025 13:55:40 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\sa_management_system\vendor\bluerhinos\phpmqtt\phpMQTT.php on line 328
+[24-Jan-2025 13:55:40 Europe/Berlin] [MQTT] Connection error: Failed to subscribe to fingerprint topic
+[24-Jan-2025 13:55:42 Europe/Berlin] [Fingerprint] Connection attempt 3 of 3
+[24-Jan-2025 13:55:42 Europe/Berlin] [MQTT] Attempting connection with client ID: php-client-67938dcb75f5d
+[24-Jan-2025 13:55:42 Europe/Berlin] [MQTT] Successfully connected to broker
+[24-Jan-2025 13:55:42 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\sa_management_system\vendor\bluerhinos\phpmqtt\phpMQTT.php on line 328
+[24-Jan-2025 13:55:42 Europe/Berlin] [MQTT] Connection error: Failed to subscribe to fingerprint topic
+[24-Jan-2025 13:55:49 Europe/Berlin] [MQTT] Attempting connection with client ID: php-client-67938dd578704
+[24-Jan-2025 13:55:49 Europe/Berlin] [MQTT] Successfully connected to broker
+[24-Jan-2025 13:55:49 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\sa_management_system\vendor\bluerhinos\phpmqtt\phpMQTT.php on line 328
+[24-Jan-2025 13:55:49 Europe/Berlin] [MQTT] Connection error: Failed to subscribe to fingerprint topic
+[24-Jan-2025 13:55:49 Europe/Berlin] [Fingerprint] Received action: initialize
+[24-Jan-2025 13:55:49 Europe/Berlin] [Fingerprint] Connection attempt 1 of 3
+[24-Jan-2025 13:55:49 Europe/Berlin] [MQTT] Attempting connection with client ID: php-client-67938dd578704
+[24-Jan-2025 13:55:49 Europe/Berlin] [MQTT] Successfully connected to broker
+[24-Jan-2025 13:55:49 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\sa_management_system\vendor\bluerhinos\phpmqtt\phpMQTT.php on line 328
+[24-Jan-2025 13:55:49 Europe/Berlin] [MQTT] Connection error: Failed to subscribe to fingerprint topic
+[24-Jan-2025 13:55:50 Europe/Berlin] [Fingerprint] Connection attempt 2 of 3
+[24-Jan-2025 13:55:50 Europe/Berlin] [MQTT] Attempting connection with client ID: php-client-67938dd578704
+[24-Jan-2025 13:55:50 Europe/Berlin] [MQTT] Successfully connected to broker
+[24-Jan-2025 13:55:50 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\sa_management_system\vendor\bluerhinos\phpmqtt\phpMQTT.php on line 328
+[24-Jan-2025 13:55:50 Europe/Berlin] [MQTT] Connection error: Failed to subscribe to fingerprint topic
+[24-Jan-2025 13:55:52 Europe/Berlin] [Fingerprint] Connection attempt 3 of 3
+[24-Jan-2025 13:55:52 Europe/Berlin] [MQTT] Attempting connection with client ID: php-client-67938dd578704
+[24-Jan-2025 13:55:52 Europe/Berlin] [MQTT] Successfully connected to broker
+[24-Jan-2025 13:55:52 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\sa_management_system\vendor\bluerhinos\phpmqtt\phpMQTT.php on line 328
+[24-Jan-2025 13:55:52 Europe/Berlin] [MQTT] Connection error: Failed to subscribe to fingerprint topic
+[24-Jan-2025 13:59:26 Europe/Berlin] PHP Fatal error:  Uncaught Error: Class "ConnectionLogger" not found in C:\xampp\htdocs\sa_management_system\includes\mqtt_handler.php:22
+Stack trace:
+#0 C:\xampp\htdocs\sa_management_system\check_fingerprint.php(15): MQTTHandler->__construct()
+#1 {main}
+  thrown in C:\xampp\htdocs\sa_management_system\includes\mqtt_handler.php on line 22
+[24-Jan-2025 13:59:28 Europe/Berlin] PHP Fatal error:  Uncaught Error: Class "ConnectionLogger" not found in C:\xampp\htdocs\sa_management_system\includes\mqtt_handler.php:22
+Stack trace:
+#0 C:\xampp\htdocs\sa_management_system\check_fingerprint.php(15): MQTTHandler->__construct()
+#1 {main}
+  thrown in C:\xampp\htdocs\sa_management_system\includes\mqtt_handler.php on line 22
+[24-Jan-2025 13:59:33 Europe/Berlin] PHP Fatal error:  Uncaught Error: Class "ConnectionLogger" not found in C:\xampp\htdocs\sa_management_system\includes\mqtt_handler.php:22
+Stack trace:
+#0 C:\xampp\htdocs\sa_management_system\check_fingerprint.php(15): MQTTHandler->__construct()
+#1 {main}
+  thrown in C:\xampp\htdocs\sa_management_system\includes\mqtt_handler.php on line 22
+[24-Jan-2025 13:59:40 Europe/Berlin] PHP Fatal error:  Uncaught Error: Class "ConnectionLogger" not found in C:\xampp\htdocs\sa_management_system\includes\mqtt_handler.php:22
+Stack trace:
+#0 C:\xampp\htdocs\sa_management_system\check_fingerprint.php(15): MQTTHandler->__construct()
+#1 {main}
+  thrown in C:\xampp\htdocs\sa_management_system\includes\mqtt_handler.php on line 22
+[24-Jan-2025 13:59:49 Europe/Berlin] PHP Fatal error:  Uncaught Error: Class "ConnectionLogger" not found in C:\xampp\htdocs\sa_management_system\includes\mqtt_handler.php:22
+Stack trace:
+#0 C:\xampp\htdocs\sa_management_system\check_fingerprint.php(15): MQTTHandler->__construct()
+#1 {main}
+  thrown in C:\xampp\htdocs\sa_management_system\includes\mqtt_handler.php on line 22

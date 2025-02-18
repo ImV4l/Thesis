@@ -1,0 +1,203 @@
+﻿body {
+    font-family: 'Segoe UI', sans-serif;
+}
+
+span {
+    font-style: italic;
+}
+
+.container-fluid {
+  background-color:#0099cc;
+ }
+
+#Container {
+  width: 100%;
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  text-align: center;
+}
+
+#imagediv {
+  width: 320px;
+  height: 400px;
+  margin: 0 auto 20px;
+  border: 2px solid #ccc;
+  background: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#imagediv img {
+  width: 320px;
+  height: 400px;
+  object-fit: contain;
+}
+
+#imagediv div{
+	text-align: center;
+	vertical-align: middle;
+	height: 500px;
+	background: #d3d3d3;
+	display: table-cell;
+}
+
+
+#image {
+	width: 100%;
+}
+
+#imageGallery {
+	padding:0px;
+	margin: 0 auto;
+	width: 100%;
+	height: 100px;
+	overflow: hidden;
+}
+
+#imageGallery img{
+	float: left;
+	width:20%;
+	height: 100%
+}
+
+#deviceInfo {
+	padding:5px;
+	margin: 0 auto;
+	width: 100%;
+	height: 100px;
+	text-align: center;
+}
+
+#dynamicInfoDivs{
+	position: relative;
+	left: 30%;
+}
+
+#Scores {
+	margin: 0 auto;
+	width: 500px;
+    text-align:center;
+    border: 2px solid black; 
+}
+
+#status {
+    min-height: 22px;
+	text-align: center;
+	margin-bottom: 5px;
+	color: red;
+}
+
+#contentButtons{
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+#contentButtons button:disabled,
+#contentButtons input:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+#contentButtons button:enabled,
+#contentButtons input:enabled {
+    cursor: pointer;
+}
+
+#readerDivButtons {
+	padding: 5px;
+  	text-align: center;
+  	margin-bottom: 5px;
+}
+
+#modalContent{
+	width: 350px;
+	margin: 0 auto;
+	padding : 5px;
+	text-align: left;
+	vertical-align: center;
+}
+
+#saveAndFormats{
+	position:relative;
+	left:660px;
+	top:-750px;
+	width:135px;
+}
+
+.action-buttons {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+/* Fingerprint Capture Styles */
+.fingerprint-container {
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.scan-quality {
+  margin-bottom: 20px;
+}
+
+.scan-quality .form-control {
+  background-color: #DCDCDC;
+  text-align: center;
+}
+
+.preview-box {
+  min-height: 300px;
+  border: 2px dashed #ccc;
+  margin: 20px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f9f9f9;
+}
+
+.message-box {
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  background: #e9ecef;
+  text-align: center;
+}
+
+.control-buttons {
+  margin: 20px 0;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+/* Additional helper classes */
+.text-center {
+  text-align: center;
+}
+
+.mb-4 {
+  margin-bottom: 1.5rem;
+}
+
+.btn-sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  border-radius: 0.2rem;
+}
+
+.float-end {
+  float: right;
+}
+
+.text-muted {
+  color: #6c757d;
+}
