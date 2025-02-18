@@ -38,7 +38,7 @@ include('includes/header.php');
                                                     <div class="row">
                                                         <!-- Profile Image -->
                                                         <div class="col-md-4 text-center">
-                                                            <img src="../images/profile.png" class="img-fluid rounded-circle" alt="Profile Photo" style="max-width: 100px;">
+                                                            <img src="../images/profile.png" class="img-fluid rounded-circle" alt="Profile Photo" style="width: 150px; height: 150px; object-fit: cover;">
                                                         </div>
                                                         <!-- Personal Info -->
                                                         <div class="col-md-8">
@@ -263,6 +263,80 @@ include('includes/header.php');
                                                 </div>
                                             </div>
 
+                                        </div>
+                                    </div>
+
+                                    <!-- Daily Time Record Container -->
+                                    <div class="container mt-5">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <h3>Daily Time Record</h3>
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Date</th>
+                                                            <th>Time In</th>
+                                                            <th>Time Out</th>
+                                                            <th>Hours Worked</th>
+                                                            <th>Salary (₱15/hour)</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php
+                                                        // Fetch attendance records for this student assistant
+                                                        $attendance_query = "SELECT * FROM attendance WHERE sa_id = '$user_id' ORDER BY date DESC";
+                                                        $attendance_run = mysqli_query($con, $attendance_query);
+
+                                                        if (mysqli_num_rows($attendance_run) > 0) {
+                                                            while ($attendance = mysqli_fetch_assoc($attendance_run)) {
+                                                                $time_in = new DateTime($attendance['time_in']);
+                                                                $time_out = new DateTime($attendance['time_out']);
+                                                                $interval = $time_in->diff($time_out);
+                                                                $hours_worked = $interval->h + ($interval->i / 60);
+                                                                $salary = $hours_worked * 15;
+                                                        ?>
+                                                                <tr>
+                                                                    <td><?= date('M d, Y', strtotime($attendance['date'])) ?></td>
+                                                                    <td><?= date('h:i A', strtotime($attendance['time_in'])) ?></td>
+                                                                    <td><?= date('h:i A', strtotime($attendance['time_out'])) ?></td>
+                                                                    <td><?= number_format($hours_worked, 2) ?> hours</td>
+                                                                    <td>₱<?= number_format($salary, 2) ?></td>
+                                                                </tr>
+                                                            <?php
+                                                            }
+                                                        } else {
+                                                            ?>
+                                                            <tr>
+                                                                <td colspan="5" class="text-center">No attendance records found</td>
+                                                            </tr>
+                                                        <?php
+                                                        }
+                                                        ?>
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <?php
+                                                        // Calculate total salary
+                                                        $total_salary = 0;
+                                                        $attendance_query = "SELECT * FROM attendance WHERE sa_id = '$user_id'";
+                                                        $attendance_run = mysqli_query($con, $attendance_query);
+
+                                                        if (mysqli_num_rows($attendance_run) > 0) {
+                                                            while ($attendance = mysqli_fetch_assoc($attendance_run)) {
+                                                                $time_in = new DateTime($attendance['time_in']);
+                                                                $time_out = new DateTime($attendance['time_out']);
+                                                                $interval = $time_in->diff($time_out);
+                                                                $hours_worked = $interval->h + ($interval->i / 60);
+                                                                $total_salary += $hours_worked * 15;
+                                                            }
+                                                        }
+                                                        ?>
+                                                        <tr>
+                                                            <th colspan="4" class="text-end">Total Salary</th>
+                                                            <th>₱<?= number_format($total_salary, 2) ?></th>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </form>

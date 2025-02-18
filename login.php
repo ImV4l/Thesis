@@ -78,6 +78,9 @@ include('includes/navbar.php');
                             <div class="mb-4">
                                 <label class="form-label text-secondary">Password</label>
                                 <div class="input-group">
+                                    <span class="input-group-text input-icon">
+                                        <i class="fas fa-lock text-muted"></i>
+                                    </span>
                                     <input type="password" name="password" id="loginPassword"
                                         class="form-control form-control-lg"
                                         placeholder="••••••••"

@@ -87,10 +87,7 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-copy"></i></div>
                     PayRoll
                 </a>
-                <a class="nav-link" href="schedule_sa.php">
-                    <div class="sb-nav-link-icon"><i class="fas fa-clock"></i></div>
-                    Schedule
-                </a>
+                
             </div>
         </div>
 
