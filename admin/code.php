@@ -14,7 +14,7 @@ if (isset($_POST['restore_user1'])) {
         header('Location: restoreacc.php');
         exit(0);
     } else {
-        
+
         header('Location: restoreacc.php');
         exit(0);
     }
@@ -32,29 +32,28 @@ if (isset($_POST['restore_user'])) {
         header('Location: restore.php');
         exit(0);
     } else {
-        
+
         header('Location: restore.php');
         exit(0);
     }
 }
 
-if(isset($_POST['update_account'])) {
-$user_id = $_POST['id'];
-$name = $_POST['name'];
-$username = $_POST['username'];
-$email = $_POST['email'];
-$password = $_POST['password'];
-$role_as = $_POST['role_as'];
+if (isset($_POST['update_account'])) {
+    $user_id = $_POST['id'];
+    $name = $_POST['name'];
+    $username = $_POST['username'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $role_as = $_POST['role_as'];
 
-$query = "UPDATE admin SET name='$name', username='$username', email='$email', password='$password', role_as='$role_as'
+    $query = "UPDATE admin SET name='$name', username='$username', email='$email', password='$password', role_as='$role_as'
 WHERE id = '$user_id'";
-$query_run = mysqli_query($con, $query);
+    $query_run = mysqli_query($con, $query);
 
-if ($query_run) {
-    header('Location: accounts.php');
-    exit(0);
-}
-
+    if ($query_run) {
+        header('Location: accounts.php');
+        exit(0);
+    }
 }
 
 if (isset($_POST['delete_user1'])) {
@@ -76,21 +75,17 @@ if (isset($_POST['delete_user1'])) {
     }
 }
 
-if(isset($_POST['delete_user_permanent']))
-{
+if (isset($_POST['delete_user_permanent'])) {
     $user_id = mysqli_real_escape_string($con, $_POST['delete_user_permanent']);
 
     $query = "DELETE FROM admin WHERE id='$user_id'";
     $query_run = mysqli_query($con, $query);
 
-    if($query_run)
-    {
+    if ($query_run) {
         $_SESSION['message'] = "User Permanently Deleted Successfully";
         header("Location: restoreacc.php");
         exit(0);
-    }
-    else
-    {
+    } else {
         $_SESSION['message'] = "Something Went Wrong!";
         header("Location: restoreacc.php");
         exit(0);
@@ -116,28 +111,24 @@ if (isset($_POST['delete_user'])) {
     }
 }
 
-if(isset($_POST['delete_permanent']))
-{
+if (isset($_POST['delete_permanent'])) {
     $user_id = mysqli_real_escape_string($con, $_POST['delete_permanent']);
 
     $query = "DELETE FROM student_assistant WHERE id='$user_id'";
     $query_run = mysqli_query($con, $query);
 
-    if($query_run)
-    {
+    if ($query_run) {
         $_SESSION['message'] = "Student Assistant Permanently Deleted Successfully";
         header("Location: restore.php");
         exit(0);
-    }
-    else
-    {
+    } else {
         $_SESSION['message'] = "Something Went Wrong!";
         header("Location: restore.php");
         exit(0);
     }
 }
 
-if (isset($_POST['update_user'])) { 
+if (isset($_POST['update_user'])) {
     $user_id = $_POST['user_id'];
     $last_name = mysqli_real_escape_string($con, $_POST['last_name']);
     $first_name = mysqli_real_escape_string($con, $_POST['first_name']);
@@ -158,7 +149,7 @@ if (isset($_POST['update_user'])) {
     $present_scholar = mysqli_real_escape_string($con, $_POST['present_scholar']);
     $work_experience = mysqli_real_escape_string($con, $_POST['work_experience']);
     $special_talent = mysqli_real_escape_string($con, $_POST['special_talent']);
-    
+
     // References
     $out_name1 = mysqli_real_escape_string($con, $_POST['out_name1']);
     $comp_add1 = mysqli_real_escape_string($con, $_POST['comp_add1']);
@@ -178,7 +169,7 @@ if (isset($_POST['update_user'])) {
     $from_wit3 = mysqli_real_escape_string($con, $_POST['from_wit3']);
     $comp_add6 = mysqli_real_escape_string($con, $_POST['comp_add6']);
     $cn6 = mysqli_real_escape_string($con, $_POST['cn6']);
-    
+
     // Family Information
     $fathers_name = mysqli_real_escape_string($con, $_POST['fathers_name']);
     $fathers_occ = mysqli_real_escape_string($con, $_POST['fathers_occ']);
@@ -187,7 +178,7 @@ if (isset($_POST['update_user'])) {
     $mothers_occ = mysqli_real_escape_string($con, $_POST['mothers_occ']);
     $mothers_income = mysqli_real_escape_string($con, $_POST['mothers_income']);
     $siblings = mysqli_real_escape_string($con, $_POST['siblings']);
-    
+
     // Concatenate work names into a string
     $work_name = isset($_POST['work_name']) ? $_POST['work_name'] : [];
     $work_name_string = implode(", ", $work_name); // Using implode for a cleaner approach
@@ -251,4 +242,3 @@ if (isset($_POST['update_user'])) {
         exit(0);
     }
 }
-

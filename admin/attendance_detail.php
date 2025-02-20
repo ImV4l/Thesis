@@ -42,10 +42,10 @@ $result = mysqli_query($con, $query);
                 <th>ID</th>
                 <th>Student Name</th>
                 <th>Work</th>
-                <th>Date</th>
-                <th>Work Hour</th>
+                <th>Date</th>              
                 <th>Time In</th>
                 <th>Time Out</th>
+                <th>Work Hour</th>
                 <th>Option</th>
               </tr>
             </thead>
@@ -65,9 +65,9 @@ $result = mysqli_query($con, $query);
                   <td><?php echo htmlspecialchars($row['first_name'] . ' ' . $row['last_name']); ?></td>
                   <td><?php echo htmlspecialchars($row['work']); ?></td>
                   <td><?php echo htmlspecialchars($row['date'] ?? ''); ?></td>
-                  <td><?php echo $num_hour; ?></td>
                   <td><?php echo htmlspecialchars($row['time_in'] ?? ''); ?></td>
                   <td><?php echo htmlspecialchars($row['time_out'] ?? ''); ?></td>
+                  <td><?php echo $num_hour; ?></td>
                   <td>
                     <button class='btn btn-success btn-sm btn-flat edit'
                       data-id='<?php echo $row['attid']; ?>'
@@ -121,6 +121,29 @@ $result = mysqli_query($con, $query);
   </div>
 </div>
 
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Delete Attendance Record</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form id="deleteForm" method="POST" action="attendance_delete.php">
+        <div class="modal-body">
+          <input type="hidden" name="attid" id="deleteAttId">
+          <p>Are you sure you want to delete this attendance record?</p>
+          <p class="text-danger"><strong>This action cannot be undone!</strong></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-danger">Delete Record</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.edit').forEach(button => {
@@ -162,6 +185,42 @@ $result = mysqli_query($con, $query);
         .catch(error => {
           console.error('Error:', error);
           alert('An error occurred while updating attendance.');
+        });
+    });
+
+    // Delete button functionality
+    document.querySelectorAll('.delete').forEach(button => {
+      button.addEventListener('click', function() {
+        let attid = this.getAttribute('data-id');
+        document.getElementById('deleteAttId').value = attid;
+        new bootstrap.Modal(document.getElementById('deleteModal')).show();
+      });
+    });
+
+    // Delete form submission
+    document.getElementById('deleteForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const formData = new FormData(this);
+
+      fetch('attendance_delete.php', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json'
+          },
+          body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            alert('Attendance record deleted successfully!');
+            location.reload();
+          } else {
+            alert('Failed to delete attendance record. Please check the server response.');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred while deleting the attendance record.');
         });
     });
   });

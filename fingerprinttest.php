@@ -216,7 +216,7 @@ $result_latest = mysqli_query($con, $query);
                             <th>Work in</th>
                             <th>Year</th>
                             <th>Date</th>
-                            <th>Work Hour</th>
+                            <th>Day</th>
                             <th>Time in</th>
                             <th>Time out</th>
                             <th>Status</th>

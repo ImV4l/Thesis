@@ -69,11 +69,9 @@ include('includes/header.php');
 
 
 <script>
-    
-
     // Payslip Generation
     document.querySelectorAll('.payslip-btn').forEach(button => {
-        button.addEventListener('click', function () {
+        button.addEventListener('click', function() {
             const name = this.getAttribute('data-name');
             const work = this.getAttribute('data-work');
             const hours = this.getAttribute('data-hours');
@@ -120,7 +118,7 @@ include('includes/header.php');
 
     // Payroll Generation
     document.querySelectorAll('.payroll-btn').forEach(button => {
-        button.addEventListener('click', function () {
+        button.addEventListener('click', function() {
             const name = this.getAttribute('data-name');
             const work = this.getAttribute('data-work');
             const hours = this.getAttribute('data-hours');

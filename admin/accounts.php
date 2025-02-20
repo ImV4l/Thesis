@@ -26,8 +26,8 @@ include('includes/header.php');
                                 <th>User Name </th>
                                 <th>Email</th>
                                 <th>Role</th>
-                                <th>Edit</th>
-                                <th>Delete</th>
+                                <th>Option</th>
+                                
                             </tr>
                         </thead>
                         <tbody>
@@ -52,10 +52,12 @@ include('includes/header.php');
                                                 }
                                             ?>
                                         </td>
-                                        <td><a href="edit-account.php?id=<?= $row['id']; ?>" class="btn btn-success">Edit</a></td>
                                         <td>
+                                            <a href="edit-account.php?id=<?= $row['id']; ?>" class="btn btn-success">Edit</a>
                                             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="<?= $row['id']; ?>" data-name="<?= htmlspecialchars($row['name']); ?>">Delete</button>
                                         </td>
+                                        
+                                        
                                         
                                     </tr>
                                 <?php
