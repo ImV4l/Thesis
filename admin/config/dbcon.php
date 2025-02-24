@@ -8,6 +8,5 @@ $database = "sa_management_systen";
 $con = mysqli_connect("$host", "$username", "$password", "$database");
 
 if (!$con) {
-    header("Location: ../errors/dberror.php");
-    die();
+    die("Connection failed: " . mysqli_connect_error());
 }

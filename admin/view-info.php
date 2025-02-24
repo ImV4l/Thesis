@@ -58,6 +58,7 @@ $total_hours_worked = 0;
                                                     </div>
                                                     <div class="col-md-8">
                                                         <h3><?= $user['last_name'] ?>, <?= $user['first_name'] ?></h3>
+                                                        <h5><?= $user['student_id'] ?></h5>
                                                         <p class="text-muted"><?= $user['work'] ?></p>
                                                     </div>
                                                 </div>
@@ -283,15 +284,10 @@ $total_hours_worked = 0;
                                         <h5 class="mb-0">Daily Time Record
                                             <div class="float-end d-flex align-items-center">
                                                 <div class="me-2" style="font-size: 0.8rem;">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="me-2">
-                                                            <input type="date" id="startDate" class="form-control form-control-sm">
-                                                            <small class="form-text text-muted">Start</small>
-                                                        </div>
-                                                        <div class="me-2">
-                                                            <input type="date" id="endDate" class="form-control form-control-sm">
-                                                            <small class="form-text text-muted">End</small>
-                                                        </div>
+                                                    <div class="input-group input-group-sm">
+                                                        <input type="date" id="startDate" class="form-control">
+                                                        <span class="input-group-text">to</span>
+                                                        <input type="date" id="endDate" class="form-control">
                                                     </div>
                                                 </div>
                                                 <button class='btn btn-primary btn-sm payslip-btn me-2'
