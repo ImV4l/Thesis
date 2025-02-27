@@ -40,17 +40,69 @@ if (isset($_POST['restore_user'])) {
 
 if (isset($_POST['update_account'])) {
     $user_id = $_POST['id'];
-    $name = $_POST['name'];
-    $username = $_POST['username'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $role_as = $_POST['role_as'];
+    $name = mysqli_real_escape_string($con, $_POST['name']);
+    $username = mysqli_real_escape_string($con, $_POST['username']);
+    $email = mysqli_real_escape_string($con, $_POST['email']);
+    $role_as = mysqli_real_escape_string($con, $_POST['role_as']);
+    $old_password = mysqli_real_escape_string($con, $_POST['old_password']);
+    $new_password = mysqli_real_escape_string($con, $_POST['new_password']);
+    $confirm_password = mysqli_real_escape_string($con, $_POST['confirm_password']);
 
-    $query = "UPDATE admin SET name='$name', username='$username', email='$email', password='$password', role_as='$role_as'
-WHERE id = '$user_id'";
-    $query_run = mysqli_query($con, $query);
+    // Get current password from database
+    $check_query = "SELECT password FROM admin WHERE id='$user_id'";
+    $check_result = mysqli_query($con, $check_query);
 
-    if ($query_run) {
+    if (mysqli_num_rows($check_result) > 0) {
+        $user_data = mysqli_fetch_assoc($check_result);
+        $current_password = $user_data['password'];
+
+        // Initialize password update
+        $password_update = "";
+
+        // Check if new password is being updated
+        if (!empty($new_password)) {
+            // Verify old password
+            if ($old_password !== $current_password) {
+                $_SESSION['message'] = "Old password is incorrect";
+                header('Location: accounts.php');
+                exit(0);
+            }
+
+            // Check if new passwords match
+            if ($new_password !== $confirm_password) {
+                $_SESSION['message'] = "New passwords do not match";
+                header('Location: accounts.php');
+                exit(0);
+            }
+
+            // Set new password
+            $password_update = ", password='$new_password'";
+        }
+
+        // Update query
+        $query = "UPDATE admin SET 
+                  name='$name', 
+                  username='$username', 
+                  email='$email', 
+                  role_as='$role_as'
+                  $password_update
+                  WHERE id='$user_id'";
+
+        $query_run = mysqli_query($con, $query);
+
+        if ($query_run) {
+            $_SESSION['message'] = "Account updated successfully";
+            $_SESSION['message_type'] = "success";
+            header('Location: accounts.php');
+            exit(0);
+        } else {
+            $_SESSION['message'] = "Failed to update account: " . mysqli_error($con);
+            $_SESSION['message_type'] = "danger";
+            header('Location: accounts.php');
+            exit(0);
+        }
+    } else {
+        $_SESSION['message'] = "User not found";
         header('Location: accounts.php');
         exit(0);
     }

@@ -32,13 +32,13 @@
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="techno.php">Information Technology</a>
                                 <a class="nav-link" href="compe.php">Computer Engineering</a>
-                                <a class="nav-link" href="ee.php">Electrcal Engineering</a>
+                                <a class="nav-link" href="ee.php">Electrical Engineering</a>
                             </nav>
                         </div>
-
                         <a class="nav-link" href="bsba.php">Business Accountancy</a>
                     </nav>
                 </div>
+
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                     <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                     Attendance
@@ -51,7 +51,6 @@
                             Time in / Time out
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
-
                         <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="tito_offices.php">Offices</a>
@@ -59,10 +58,8 @@
                                 <a class="nav-link" href="tito_manpower.php">Manpower Services</a>
                             </nav>
                         </div>
-
                     </nav>
                 </div>
-
 
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseBins" aria-expanded="false" aria-controls="collapseBins">
                     <div class="sb-nav-link-icon"><i class="fas fa-trash"></i></div>
@@ -71,12 +68,11 @@
                 </a>
 
                 <div class="collapse" id="collapseBins" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-                    <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                    <nav class="sb-sidenav-menu-nested nav">
                         <a class="nav-link" href="restoreacc.php">Accounts Bins</a>
                         <a class="nav-link" href="restore.php">Student Assistant Bins</a>
                     </nav>
                 </div>
-
 
                 <div class="sb-sidenav-menu-heading">Report</div>
                 <a class="nav-link" href="report.php">
@@ -85,11 +81,11 @@
                 </a>
                 <a class="nav-link" href="payroll.php">
                     <div class="sb-nav-link-icon"><i class="fas fa-copy"></i></div>
-                    PayRoll
+                    Payroll
                 </a>
-                
             </div>
         </div>
 
+        
     </nav>
 </div>
