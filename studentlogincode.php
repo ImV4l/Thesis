@@ -7,8 +7,10 @@ if (isset($_POST['student_login_btn'])) {
     $password = mysqli_real_escape_string($con, $_POST['password']);
 
     // Query to check student credentials
-    $login_query = "SELECT * FROM register_sa 
-                    WHERE student_id='$student_id' 
+    $login_query = "SELECT rs.*, sa.image 
+                    FROM register_sa rs
+                    LEFT JOIN student_assistant sa ON rs.student_id = sa.student_id
+                    WHERE rs.student_id='$student_id' 
                     LIMIT 1";
     $login_query_run = mysqli_query($con, $login_query);
 
@@ -24,8 +26,10 @@ if (isset($_POST['student_login_btn'])) {
             $_SESSION['auth_user'] = [
                 'user_id' => $student_data['id'],
                 'student_id' => $student_data['student_id'],
-                'name' => $student_data['name'],
-                'email' => $student_data['email']
+                'first_name' => $student_data['first_name'],
+                'last_name' => $student_data['last_name'],
+                'email' => $student_data['email'],
+                'profile_picture' => $student_data['image']
             ];
 
             // Redirect to student dashboard

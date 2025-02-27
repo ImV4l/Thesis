@@ -4,7 +4,8 @@ include('admin/config/dbcon.php');
 
 if (isset($_POST['register_btn'])) {
     // Sanitize and validate input data
-    $name = mysqli_real_escape_string($con, $_POST['name']);
+    $first_name = mysqli_real_escape_string($con, $_POST['first_name']);
+    $last_name = mysqli_real_escape_string($con, $_POST['last_name']);
     $student_id = mysqli_real_escape_string($con, $_POST['student_id']);
     $email = mysqli_real_escape_string($con, $_POST['email']);
     $password = mysqli_real_escape_string($con, $_POST['password']);
@@ -41,8 +42,8 @@ if (isset($_POST['register_btn'])) {
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
     // Insert data into database
-    $query = "INSERT INTO register_sa (name, student_id, email, password) 
-              VALUES ('$name', '$student_id', '$email', '$hashed_password')";
+    $query = "INSERT INTO register_sa (first_name, last_name, student_id, email, password) 
+              VALUES ('$first_name', '$last_name', '$student_id', '$email', '$hashed_password')";
     $query_run = mysqli_query($con, $query);
 
     if ($query_run) {
@@ -50,7 +51,7 @@ if (isset($_POST['register_btn'])) {
         header("Location: login.php");
         exit(0);
     } else {
-        $_SESSION['message'] = "Registration failed. Please try again.";
+        $_SESSION['message'] = "Registration failed";
         header("Location: register_student.php");
         exit(0);
     }

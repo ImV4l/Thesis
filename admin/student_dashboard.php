@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('includes/header.php');
+include('includes/student_header.php');
 include('includes/navbar.php');
 
 // Initialize variables
@@ -20,14 +20,15 @@ include('config/dbcon.php');
 // Get student information from session
 $student_id = $_SESSION['auth_user']['student_id'];
 
-// Fetch student data from database
-$query = "SELECT last_name, first_name, student_id, work, age, sex, civil_status, date_of_birth, city_address, 
+// Fetch student data including image
+$query = "SELECT first_name, last_name, student_id, work, age, sex, civil_status, date_of_birth, city_address, 
                  contact_no1, province_address, guardian, present_scholar, 
                  past_scholar, program, year, honor_award, work_experience, 
                  special_talent, out_name1, comp_add1, cn1, out_name2, comp_add2, 
                  cn2, out_name3, comp_add3, cn3, from_wit1, comp_add4, cn4, 
                  from_wit2, comp_add5, cn5, from_wit3, comp_add6, cn6, 
-                 fathers_name, fathers_occ, fathers_income, mothers_name, mothers_occ, mothers_income, siblings 
+                 fathers_name, fathers_occ, fathers_income, mothers_name, mothers_occ, mothers_income, siblings,
+                 image 
           FROM student_assistant 
           WHERE student_id = '$student_id' 
           LIMIT 1";
@@ -48,6 +49,13 @@ if (mysqli_num_rows($query_run) > 0) {
 
 // After fetching student data, add this code
 $student_id = (int)$student_id; // Ensure student_id is an integer
+
+// Use session data for the name
+$first_name = $_SESSION['auth_user']['first_name'];
+$last_name = $_SESSION['auth_user']['last_name'];
+
+// Display profile picture
+$profile_picture = $student['image'] ? '../uploads/profiles/' . $student['image'] : 'assets/default-profile.jpg';
 ?>
 
 <style>
@@ -91,14 +99,19 @@ $student_id = (int)$student_id; // Ensure student_id is an integer
         padding-left: 0.5rem;
     }
 
-    .profile-photo {
-        width: 180px;
-        height: 180px;
-        object-fit: cover;
+    .profile-picture-container {
+        width: 150px;
+        height: 150px;
         border-radius: 50%;
-        margin: 0 auto 1.5rem;
-        border: 5px solid #fff;
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        overflow: hidden;
+        margin: 0 auto 20px;
+        border: 3px solid #F16E04;
+    }
+
+    .profile-picture {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
 
     .section-title {
@@ -254,7 +267,9 @@ $student_id = (int)$student_id; // Ensure student_id is an integer
 
                                 <div class="row mb-3">
                                     <div class="col-md-4 text-center">
-                                        <img src="../images/profile.png" class="profile-photo" alt="Profile Photo" style="width: 120px; height: 120px;">
+                                        <div class="profile-picture-container">
+                                            <img src="<?php echo $profile_picture; ?>" alt="Profile Picture" class="profile-picture">
+                                        </div>
                                     </div>
                                     <div class="col-md-8">
                                         <h4><?= htmlspecialchars($student['last_name'] ?? '') ?>, <?= htmlspecialchars($student['first_name'] ?? 'N/A') ?></h4>

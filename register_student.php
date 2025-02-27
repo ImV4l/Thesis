@@ -82,12 +82,21 @@ include('includes/navbar.php');
                         <form action="register_studentcode.php" method="POST" class="needs-validation" onsubmit="return validateRegistrationForm()" novalidate>
                             <div class="row g-3">
                                 <div class="col-md-6">
-                                    <label class="form-label text-secondary">Name</label>
+                                    <label class="form-label text-secondary">First Name</label>
                                     <div class="input-group">
                                         <span class="input-group-text input-icon">
                                             <i class="fas fa-user text-muted"></i>
                                         </span>
-                                        <input type="text" name="name" class="form-control form-control-lg" required>
+                                        <input type="text" name="first_name" class="form-control form-control-lg" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label text-secondary">Last Name</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text input-icon">
+                                            <i class="fas fa-user text-muted"></i>
+                                        </span>
+                                        <input type="text" name="last_name" class="form-control form-control-lg" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -99,7 +108,7 @@ include('includes/navbar.php');
                                         <input type="text" name="student_id" class="form-control form-control-lg" required>
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                <div class="col-md-6">
                                     <label class="form-label text-secondary">Email</label>
                                     <div class="input-group">
                                         <span class="input-group-text input-icon">
