@@ -49,10 +49,21 @@ include('includes/navbar.php');
             <div class="col-xl-5 col-lg-6 col-md-8">
                 <div class="card auth-card border-0 overflow-hidden">
                     <div class="auth-header text-center py-4">
-                        <h3 class="text-white mb-0 fw-bold"><i class="fas fa-key me-2"></i>FORGOT PASSWORD</h3>
+                        <h3 class="text-white mb-0 fw-bold"><i class="fas fa-key me-2"></i>STUDENT PASSWORD RESET</h3>
                     </div>
                     <div class="card-body px-lg-5 py-4">
-                        <form action="send_reset_link.php" method="POST" class="needs-validation" novalidate>
+                        <form action="student_send_reset_link.php" method="POST" class="needs-validation" novalidate>
+                            <div class="mb-4">
+                                <label class="form-label text-secondary">Student ID</label>
+                                <div class="input-group">
+                                    <span class="input-group-text input-icon">
+                                        <i class="fas fa-id-card text-muted"></i>
+                                    </span>
+                                    <input type="text" name="student_id" class="form-control form-control-lg"
+                                        placeholder="Enter your student ID" required>
+                                </div>
+                            </div>
+
                             <div class="mb-4">
                                 <label class="form-label text-secondary">Email Address</label>
                                 <div class="input-group">
@@ -64,7 +75,7 @@ include('includes/navbar.php');
                                 </div>
                             </div>
 
-                            <button type="submit" name="send_reset_link_btn" class="btn btn-gradient btn-lg w-100 text-white fw-bold">
+                            <button type="submit" name="student_send_reset_link_btn" class="btn btn-gradient btn-lg w-100 text-white fw-bold">
                                 <i class="fas fa-paper-plane me-2"></i>SEND RESET LINK
                             </button>
 
@@ -81,4 +92,4 @@ include('includes/navbar.php');
 
 <?php
 include('includes/footer.php');
-?>
+?> 
