@@ -21,65 +21,67 @@ include('includes/header.php');
                     </h4>
                 </div>
                 <div class="card-body">
-                    <table id="myTable" class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Last Name</th>
-                                <th>First Name</th>
-                                <th>Program</th>
-                                <th>Year</th>
-                                <th>Work In</th>
-                                <th>Option</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            $query = "SELECT * FROM student_assistant WHERE status!='2'";
-                            $query_run = mysqli_query($con, $query);
+                    <div class="table-responsive">
+                        <table id="myTable" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Student ID</th>
+                                    <th>Last Name</th>
+                                    <th>First Name</th>
+                                    <th>Program</th>
+                                    <th>Year</th>
+                                    <th>Work In</th>
+                                    <th>Option</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $query = "SELECT * FROM student_assistant WHERE status!='2'";
+                                $query_run = mysqli_query($con, $query);
 
-                            if (mysqli_num_rows($query_run) > 0) {
-                                foreach ($query_run as $row) {
-                            ?>
+                                if (mysqli_num_rows($query_run) > 0) {
+                                    foreach ($query_run as $row) {
+                                ?>
+                                        <tr>
+                                            <td><?= $row['student_id']; ?></td>
+                                            <td><?= $row['last_name']; ?></td>
+                                            <td><?= $row['first_name']; ?></td>
+                                            <td><?= $row['program']; ?></td>
+                                            <td><?= $row['year']; ?></td>
+                                            <td><?= $row['work']; ?></td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Action
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a class="dropdown-item" href="view-info.php?id=<?= $row['id']; ?>" class="btn btn-info">View</a></li>
+                                                        <li><a class="dropdown-item" href="edit-register.php?id=<?= $row['id']; ?>" class="btn btn-success">Edit</a></li>
+                                                    </ul>
+                                                </div>
+                                                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="<?= $row['id']; ?>" data-name="<?= htmlspecialchars($row['last_name'] . ' ' . $row['first_name']); ?>">Delete</button>
+                                            </td>
+                                            <td>
+                                                <select name="status" class="form-select status-select" data-id="<?= $row['id']; ?>" style="background-color: <?= ($row['status1'] == 'Active') ? '#d4edda' : '#f8d7da'; ?>">
+                                                    <option value="Active" <?= ($row['status1'] == 'Active') ? 'selected' : ''; ?>>Active</option>
+                                                    <option value="Not Active" <?= ($row['status1'] == 'Not Active') ? 'selected' : ''; ?>>Not Active</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                    <?php
+                                    }
+                                } else {
+                                    ?>
                                     <tr>
-                                        <td><?= $row['id']; ?></td>
-                                        <td><?= $row['last_name']; ?></td>
-                                        <td><?= $row['first_name']; ?></td>
-                                        <td><?= $row['program']; ?></td>
-                                        <td><?= $row['year']; ?></td>
-                                        <td><?= $row['work']; ?></td>
-                                        <td>
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    Action
-                                                </button>
-                                                <ul class="dropdown-menu">
-                                                    <li><a class="dropdown-item" href="view-info.php?id=<?= $row['id']; ?>" class="btn btn-info">View</a></li>
-                                                    <li><a class="dropdown-item" href="edit-register.php?id=<?= $row['id']; ?>" class="btn btn-success">Edit</a></li>
-                                                </ul>
-                                            </div>
-                                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="<?= $row['id']; ?>" data-name="<?= htmlspecialchars($row['last_name'] . ' ' . $row['first_name']); ?>">Delete</button>
-                                        </td>
-                                        <td>
-                                            <select name="status" class="form-select status-select" data-id="<?= $row['id']; ?>" style="background-color: <?= ($row['status1'] == 'Active') ? '#d4edda' : '#f8d7da'; ?>">
-                                                <option value="Active" <?= ($row['status1'] == 'Active') ? 'selected' : ''; ?>>Active</option>
-                                                <option value="Not Active" <?= ($row['status1'] == 'Not Active') ? 'selected' : ''; ?>>Not Active</option>
-                                            </select>
-                                        </td>
+                                        <td colspan="10">No Record Found</td>
                                     </tr>
                                 <?php
                                 }
-                            } else {
                                 ?>
-                                <tr>
-                                    <td colspan="10">No Record Found</td>
-                                </tr>
-                            <?php
-                            }
-                            ?>
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

@@ -32,56 +32,57 @@ $result = mysqli_query($con, $query);
       <div class="card">
         <div class="card-header">
           <h4>Student Attendance Records
-            <a class="btn btn-primary float-end" data-id='<?php echo $row['attid']; ?>'><i class='fa fa-print'></i> DTR</a>
           </h4>
         </div>
         <div class="card-body">
-          <table id="myTable" class="table table-bordered">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Student Name</th>
-                <th>Work</th>
-                <th>Date</th>              
-                <th>Time In</th>
-                <th>Time Out</th>
-                <th>Work Hour</th>
-                <th>Option</th>
-              </tr>
-            </thead>
-            <tbody>
-              <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                <?php
-                $num_hour = '-';
-                if (!empty($row['time_in']) && !empty($row['time_out'])) {
-                  $time_in = new DateTime($row['time_in']);
-                  $time_out = new DateTime($row['time_out']);
-                  $interval = $time_in->diff($time_out);
-                  $num_hour = $interval->format('%H:%I:%S');
-                }
-                ?>
+          <div class="table-responsive">
+            <table id="myTable" class="table table-bordered">
+              <thead>
                 <tr>
-                  <td><?php echo htmlspecialchars($row['id']); ?></td>
-                  <td><?php echo htmlspecialchars($row['first_name'] . ' ' . $row['last_name']); ?></td>
-                  <td><?php echo htmlspecialchars($row['work']); ?></td>
-                  <td><?php echo htmlspecialchars($row['date'] ?? ''); ?></td>
-                  <td><?php echo htmlspecialchars($row['time_in'] ?? ''); ?></td>
-                  <td><?php echo htmlspecialchars($row['time_out'] ?? ''); ?></td>
-                  <td><?php echo $num_hour; ?></td>
-                  <td>
-                    <button class='btn btn-success btn-sm btn-flat edit'
-                      data-id='<?php echo $row['attid']; ?>'
-                      data-timein='<?php echo date("H:i:s", strtotime($row['time_in'])); ?>'
-                      data-timeout='<?php echo date("H:i:s", strtotime($row['time_out'])); ?>'
-                      data-date='<?php echo $row['date']; ?>'>
-                      <i class='fa fa-edit'></i> Edit
-                    </button>
-                    <button class='btn btn-danger btn-sm btn-flat delete' data-id='<?php echo $row['attid']; ?>'><i class='fa fa-trash'></i> Delete</button>
-                  </td>
+                  <th>ID</th>
+                  <th>Student Name</th>
+                  <th>Work</th>
+                  <th>Date</th>
+                  <th>Time In</th>
+                  <th>Time Out</th>
+                  <th>Work Hour</th>
+                  <th>Option</th>
                 </tr>
-              <?php endwhile; ?>
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                <?php while ($row = mysqli_fetch_assoc($result)): ?>
+                  <?php
+                  $num_hour = '-';
+                  if (!empty($row['time_in']) && !empty($row['time_out'])) {
+                    $time_in = new DateTime($row['time_in']);
+                    $time_out = new DateTime($row['time_out']);
+                    $interval = $time_in->diff($time_out);
+                    $num_hour = $interval->format('%H:%I:%S');
+                  }
+                  ?>
+                  <tr>
+                    <td><?php echo htmlspecialchars($row['id']); ?></td>
+                    <td><?php echo htmlspecialchars($row['first_name'] . ' ' . $row['last_name']); ?></td>
+                    <td><?php echo htmlspecialchars($row['work']); ?></td>
+                    <td><?php echo htmlspecialchars($row['date'] ?? ''); ?></td>
+                    <td><?php echo htmlspecialchars($row['time_in'] ?? ''); ?></td>
+                    <td><?php echo htmlspecialchars($row['time_out'] ?? ''); ?></td>
+                    <td><?php echo $num_hour; ?></td>
+                    <td>
+                      <button class='btn btn-success btn-sm btn-flat edit'
+                        data-id='<?php echo $row['attid']; ?>'
+                        data-timein='<?php echo date("H:i:s", strtotime($row['time_in'])); ?>'
+                        data-timeout='<?php echo date("H:i:s", strtotime($row['time_out'])); ?>'
+                        data-date='<?php echo $row['date']; ?>'>
+                        <i class='fa fa-edit'></i> Edit
+                      </button>
+                      <button class='btn btn-danger btn-sm btn-flat delete' data-id='<?php echo $row['attid']; ?>'><i class='fa fa-trash'></i> Delete</button>
+                    </td>
+                  </tr>
+                <?php endwhile; ?>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

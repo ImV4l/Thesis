@@ -38,12 +38,9 @@ if (isset($_POST['register_btn'])) {
         exit(0);
     }
 
-    // Hash the password
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-    // Insert data into database
+    // Insert data into database without hashing the password
     $query = "INSERT INTO register_sa (first_name, last_name, student_id, email, password) 
-              VALUES ('$first_name', '$last_name', '$student_id', '$email', '$hashed_password')";
+              VALUES ('$first_name', '$last_name', '$student_id', '$email', '$password')";
     $query_run = mysqli_query($con, $query);
 
     if ($query_run) {
