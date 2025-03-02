@@ -28,7 +28,8 @@ include('includes/header.php');
                             <tbody>
                                 <?php
                                 $hourly_rate = 15; // Example hourly rate
-                                $query = "SELECT sa.id, sa.last_name, sa.first_name, sa.work, SUM(TIMESTAMPDIFF(HOUR, a.time_in, a.time_out)) AS total_hours
+                                $query = "SELECT sa.id, sa.last_name, sa.first_name, sa.work, 
+                                          SUM(TIMESTAMPDIFF(MINUTE, a.time_in, a.time_out) / 60.0) AS total_hours
                                           FROM student_assistant sa
                                           LEFT JOIN attendance a ON sa.id = a.sa_id
                                           WHERE sa.status != '2'
@@ -44,11 +45,11 @@ include('includes/header.php');
                                                 <td>{$row['id']}</td>
                                                 <td>{$row['last_name']}</td>
                                                 <td>{$row['first_name']}</td>
-                                                <td>{$num_hour}</td>
+                                                <td>" . number_format($num_hour, 2) . "</td>
                                                 <td>&#8369;{$gross_salary}</td>
                                                 <td>
-                                                    <button class='btn btn-success btn-sm payroll-btn' data-id='{$row['id']}' data-name='{$row['first_name']} {$row['last_name']}' data-work='{$row['work']}' data-hours='{$num_hour}' data-rate='{$hourly_rate}' data-salary='{$gross_salary}'><i class='fa fa-print'></i> Payroll</button>
-                                                    <button class='btn btn-primary btn-sm payslip-btn' data-id='{$row['id']}' data-name='{$row['first_name']} {$row['last_name']}' data-work='{$row['work']}' data-hours='{$num_hour}' data-rate='{$hourly_rate}' data-salary='{$gross_salary}'><i class='fa fa-print'></i> Payslip</button>
+                                                    <button class='btn btn-success btn-sm payroll-btn' data-id='{$row['id']}' data-name='{$row['first_name']} {$row['last_name']}' data-work='{$row['work']}' data-hours='" . number_format($num_hour, 2) . "' data-rate='{$hourly_rate}' data-salary='{$gross_salary}'><i class='fa fa-print'></i> Payroll</button>
+                                                    <button class='btn btn-primary btn-sm payslip-btn' data-id='{$row['id']}' data-name='{$row['first_name']} {$row['last_name']}' data-work='{$row['work']}' data-hours='" . number_format($num_hour, 2) . "' data-rate='{$hourly_rate}' data-salary='{$gross_salary}'><i class='fa fa-print'></i> Payslip</button>
                                                     
                                                 </td>
                                               </tr>";

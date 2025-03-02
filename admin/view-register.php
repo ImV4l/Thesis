@@ -16,7 +16,7 @@ include('includes/header.php');
             <div class="card">
                 <div class="card-header">
                     <h4>Student Assistants
-                    
+
                         <a href="add1.php" data-toggle="modal" class="btn btn-primary float-end"><i class="fa fa-plus"></i> New</a>
                     </h4>
                 </div>
@@ -51,7 +51,7 @@ include('includes/header.php');
                                         <td><?= $row['work']; ?></td>
                                         <td>
                                             <div class="btn-group">
-                                                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                                     Action
                                                 </button>
                                                 <ul class="dropdown-menu">
@@ -59,16 +59,14 @@ include('includes/header.php');
                                                     <li><a class="dropdown-item" href="edit-register.php?id=<?= $row['id']; ?>" class="btn btn-success">Edit</a></li>
                                                 </ul>
                                             </div>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="<?= $row['id']; ?>" data-name="<?= htmlspecialchars($row['last_name'] . ' ' . $row['first_name']); ?>">Delete</button>
+                                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="<?= $row['id']; ?>" data-name="<?= htmlspecialchars($row['last_name'] . ' ' . $row['first_name']); ?>">Delete</button>
                                         </td>
-                                        
-
-                                        <td><select name="status" required class="form-select">
-                                                <option value="">Choose...</option>
-                                                <option value="Active" <?php echo (isset($formData['status']) && $formData['status'] == 'Active') ? 'selected' : ''; ?>>Active</option>
-                                                <option value="Not Active" <?php echo (isset($formData['status']) && $formData['status'] == 'Not Active') ? 'selected' : ''; ?>>Not Active</option>
-                                            </select></td>
-
+                                        <td>
+                                            <select name="status" class="form-select status-select" data-id="<?= $row['id']; ?>" style="background-color: <?= ($row['status1'] == 'Active') ? '#d4edda' : '#f8d7da'; ?>">
+                                                <option value="Active" <?= ($row['status1'] == 'Active') ? 'selected' : ''; ?>>Active</option>
+                                                <option value="Not Active" <?= ($row['status1'] == 'Not Active') ? 'selected' : ''; ?>>Not Active</option>
+                                            </select>
+                                        </td>
                                     </tr>
                                 <?php
                                 }
@@ -125,6 +123,40 @@ include('includes/header.php');
             modalTitle.textContent = 'Confirm Deletion';
             modalBody.textContent = 'Are you sure you want to delete ' + userName + '?';
             deleteUserId.value = userId;
+        });
+
+        // Handle status change
+        document.querySelectorAll('.status-select').forEach(select => {
+            select.addEventListener('change', function() {
+                const userId = this.getAttribute('data-id');
+                const newStatus = this.value;
+
+                // Update the background color immediately
+                this.style.backgroundColor = (newStatus === 'Active') ? '#d4edda' : '#f8d7da';
+
+                fetch('update_status.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            id: userId,
+                            status: newStatus
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert('Status updated successfully');
+                        } else {
+                            alert('Failed to update status');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('An error occurred while updating the status');
+                    });
+            });
         });
     });
 </script>

@@ -118,8 +118,74 @@ include('includes/header.php');
 
     </div>
 
+    <!-- New Analytics Graph Section -->
+    <div class="row mt-4">
+        <div class="col-xl-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-chart-area me-1"></i>
+                    Attendance Chart
+                </div>
+                <div class="card-body" style="height: 500px;">
+                    <canvas id="workHoursChart" width="100%" height="100%"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
+<!-- Include Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    // Fetch data for the chart
+    fetch('get_daily_work_hours.php')
+        .then(response => response.json())
+        .then(data => {
+            const ctx = document.getElementById('workHoursChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: data.dates,
+                    datasets: [{
+                        label: 'Total Work Hours',
+                        data: data.hours,
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Hours'
+                            },
+                            ticks: {
+                                stepSize: 1
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Date'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        })
+        .catch(error => console.error('Error fetching chart data:', error));
+</script>
 
 <?php
 include('includes/footer.php');

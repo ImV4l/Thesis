@@ -75,10 +75,10 @@
                 </div>
 
                 <div class="sb-sidenav-menu-heading">Report</div>
-                <a class="nav-link" href="report.php">
-                    <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                    Time Log Report
-                </a>
+                    <a class="nav-link" href="report.php">
+                        <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                        Time Log Report
+                    </a>
                 <a class="nav-link" href="payroll.php">
                     <div class="sb-nav-link-icon"><i class="fas fa-copy"></i></div>
                     Payroll

@@ -15,4 +15,4 @@ if (mysqli_query($con, $query)) {
     echo "Token saved successfully";
 } else {
     echo "Error: " . mysqli_error($con);
-} 
+}
