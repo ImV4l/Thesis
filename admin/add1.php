@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="row">
 
         <div class="col-md-12">
-            <?php include('message.php'); ?> 
+            <?php include('message.php'); ?>
             <div class="card">
                 <div class="card-header">
                     <h4>Register Student Assistants
@@ -136,12 +136,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </div>
 
 <script>
-window.onbeforeunload = function() {
-    if (document.querySelector('form').checkValidity()) {
-        return;
-    }
-    return "You have unsaved changes. Are you sure you want to leave?";
-};
+    window.onbeforeunload = function() {
+        if (document.querySelector('form').checkValidity()) {
+            return;
+        }
+        return "You have unsaved changes. Are you sure you want to leave?";
+    };
 </script>
 
 <?php

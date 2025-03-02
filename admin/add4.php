@@ -10,8 +10,8 @@ include('includes/header.php');
   <link rel="stylesheet" href="app.css" type="text/css" />
   <script type="text/javascript">
     window.onerror = function(msg, url, line) {
-        console.error('Error: ' + msg + '\nURL: ' + url + '\nLine: ' + line);
-        return false;
+      console.error('Error: ' + msg + '\nURL: ' + url + '\nLine: ' + line);
+      return false;
     };
   </script>
 </head>
@@ -35,18 +35,18 @@ include('includes/header.php');
 
       <form action="addcode.php" method="POST">
         <?php
-        foreach($_POST as $key => $value) {
-            if(is_array($value)) {
-                foreach($value as $item) {
-                    echo '<input type="hidden" name="'.$key.'[]" value="'.htmlspecialchars($item).'">';
-                }
-            } else {
-                echo '<input type="hidden" name="'.$key.'" value="'.htmlspecialchars($value).'">';
+        foreach ($_POST as $key => $value) {
+          if (is_array($value)) {
+            foreach ($value as $item) {
+              echo '<input type="hidden" name="' . $key . '[]" value="' . htmlspecialchars($item) . '">';
             }
+          } else {
+            echo '<input type="hidden" name="' . $key . '" value="' . htmlspecialchars($value) . '">';
+          }
         }
-        
-        if(isset($_SESSION['temp_image'])) {
-            echo '<input type="hidden" name="profile_image" value="'.htmlspecialchars($_SESSION['temp_image']).'">';
+
+        if (isset($_SESSION['temp_image'])) {
+          echo '<input type="hidden" name="profile_image" value="' . htmlspecialchars($_SESSION['temp_image']) . '">';
         }
         ?>
         <input type="hidden" id="fingerprintData" name="fingerprintData">
@@ -83,133 +83,133 @@ include('includes/header.php');
 
   <script src="lib/jquery.min.js"></script>
   <script src="lib/bootstrap.min.js"></script>
-  
+
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const ESP32_URL = 'http://192.168.1.12'; // Your ESP32's IP
-        let capturedTemplate = null;
-        let isCapturing = false;
-        let deviceConnected = false;
-        let captureStep = 1; 
-        async function checkDeviceConnection() {
-            try {
-                const response = await fetch(`${ESP32_URL}/status`);
-                if (response.ok) {
-                    deviceConnected = true;
-                    updateStatus('Device connected. Place your finger on the sensor.', 'info');
-                    return true;
-                }
-            } catch (error) {
-                console.error('Connection error:', error);
-                updateStatus('Cannot connect to fingerprint device. Check if device is powered on.', 'danger');
-                return false;
-            }
-            return false;
+      const ESP32_URL = 'http://192.168.1.12'; // Your ESP32's IP
+      let capturedTemplate = null;
+      let isCapturing = false;
+      let deviceConnected = false;
+      let captureStep = 1;
+      async function checkDeviceConnection() {
+        try {
+          const response = await fetch(`${ESP32_URL}/status`);
+          if (response.ok) {
+            deviceConnected = true;
+            updateStatus('Device connected. Place your finger on the sensor.', 'info');
+            return true;
+          }
+        } catch (error) {
+          console.error('Connection error:', error);
+          updateStatus('Cannot connect to fingerprint device. Check if device is powered on.', 'danger');
+          return false;
+        }
+        return false;
+      }
+
+      async function initFingerprintCapture() {
+        if (!await checkDeviceConnection()) {
+          setTimeout(initFingerprintCapture, 5000);
+          return;
         }
 
-        async function initFingerprintCapture() {
-            if (!await checkDeviceConnection()) {
-                setTimeout(initFingerprintCapture, 5000);
-                return;
-            }
+        updateStatus('Ready to capture. Place finger on sensor.', 'info');
+        startCapture();
+      }
 
-            updateStatus('Ready to capture. Place finger on sensor.', 'info');
-            startCapture();
+      async function startCapture() {
+        isCapturing = true;
+        updateStepIndicator('first');
+
+        try {
+          const response = await fetch(`${ESP32_URL}/enrollFingerprint`);
+          if (!response.ok) throw new Error('Enrollment failed');
+
+          const data = await response.json();
+          console.log('Enrollment response:', data);
+
+          if (data.status === 'success') {
+            document.getElementById('fingerprintData').value = JSON.stringify({
+              fingerprintId: data.fingerprintId,
+              confidence: data.confidence
+            });
+            updateStatus('Fingerprint enrolled successfully!', 'success');
+            updateStepIndicator('complete');
+            document.getElementById('register').disabled = false;
+            document.getElementById('recapture').style.display = 'block';
+          } else {
+            updateStatus(data.message || 'Enrollment failed. Please try again.', 'danger');
+          }
+        } catch (error) {
+          console.error('Enrollment error:', error);
+          updateStatus('Error during enrollment. Please try again.', 'danger');
         }
 
-        async function startCapture() {
-            isCapturing = true;
-            updateStepIndicator('first');
-            
-            try {
-                const response = await fetch(`${ESP32_URL}/enrollFingerprint`);
-                if (!response.ok) throw new Error('Enrollment failed');
-                
-                const data = await response.json();
-                console.log('Enrollment response:', data);
-                
-                if (data.status === 'success') {
-                    document.getElementById('fingerprintData').value = JSON.stringify({
-                        fingerprintId: data.fingerprintId,
-                        confidence: data.confidence
-                    });
-                    updateStatus('Fingerprint enrolled successfully!', 'success');
-                    updateStepIndicator('complete');
-                    document.getElementById('register').disabled = false;
-                    document.getElementById('recapture').style.display = 'block';
-                } else {
-                    updateStatus(data.message || 'Enrollment failed. Please try again.', 'danger');
-                }
-            } catch (error) {
-                console.error('Enrollment error:', error);
-                updateStatus('Error during enrollment. Please try again.', 'danger');
-            }
-            
-            isCapturing = false;
-        }
+        isCapturing = false;
+      }
 
-        function updateStatus(message, type) {
-            const statusDiv = document.getElementById('status');
-            statusDiv.className = `alert alert-${type}`;
-            statusDiv.textContent = message;
-            console.log('Status update:', message);
-        }
+      function updateStatus(message, type) {
+        const statusDiv = document.getElementById('status');
+        statusDiv.className = `alert alert-${type}`;
+        statusDiv.textContent = message;
+        console.log('Status update:', message);
+      }
 
-        function updateStepIndicator(step) {
-            const indicator = document.getElementById('stepIndicator');
-            indicator.style.display = 'block';
-            
-            switch(step) {
-                case 'first':
-                    indicator.className = 'alert alert-warning';
-                    indicator.textContent = 'Step 1: Place your finger on the sensor';
-                    break;
-                case 'remove':
-                    indicator.className = 'alert alert-info';
-                    indicator.textContent = 'Please remove your finger';
-                    break;
-                case 'second':
-                    indicator.className = 'alert alert-warning';
-                    indicator.textContent = 'Step 2: Place the SAME finger again';
-                    break;
-                case 'complete':
-                    indicator.className = 'alert alert-success';
-                    indicator.textContent = 'Fingerprint captured successfully! Click Register to continue.';
-                    break;
-                default:
-                    indicator.style.display = 'none';
-            }
+      function updateStepIndicator(step) {
+        const indicator = document.getElementById('stepIndicator');
+        indicator.style.display = 'block';
+
+        switch (step) {
+          case 'first':
+            indicator.className = 'alert alert-warning';
+            indicator.textContent = 'Step 1: Place your finger on the sensor';
+            break;
+          case 'remove':
+            indicator.className = 'alert alert-info';
+            indicator.textContent = 'Please remove your finger';
+            break;
+          case 'second':
+            indicator.className = 'alert alert-warning';
+            indicator.textContent = 'Step 2: Place the SAME finger again';
+            break;
+          case 'complete':
+            indicator.className = 'alert alert-success';
+            indicator.textContent = 'Fingerprint captured successfully! Click Register to continue.';
+            break;
+          default:
+            indicator.style.display = 'none';
         }
+      }
+      initFingerprintCapture();
+      document.getElementById('recapture').addEventListener('click', function() {
+        capturedTemplate = null;
+        document.getElementById('fingerprintData').value = '';
+        document.getElementById('register').disabled = true;
+        document.getElementById('fingerprintImage').style.display = 'none';
         initFingerprintCapture();
-        document.getElementById('recapture').addEventListener('click', function() {
-            capturedTemplate = null;
-            document.getElementById('fingerprintData').value = '';
-            document.getElementById('register').disabled = true;
-            document.getElementById('fingerprintImage').style.display = 'none';
-            initFingerprintCapture();
-        });
-        document.querySelector('form').addEventListener('submit', function(e) {
-            const fingerprintData = document.getElementById('fingerprintData').value;
-            if (!fingerprintData) {
-                e.preventDefault();
-                updateStatus('Please capture a fingerprint first', 'warning');
-                return;
-            }
-            
-            try {
-                const data = JSON.parse(fingerprintData);
-                if (!data.fingerprintId) {
-                    e.preventDefault();
-                    updateStatus('Invalid fingerprint data', 'warning');
-                    return;
-                }
-                console.log('Submitting form with fingerprint ID:', data.fingerprintId);
-            } catch (error) {
-                e.preventDefault();
-                console.error('Error parsing fingerprint data:', error);
-                updateStatus('Invalid fingerprint data format', 'warning');
-            }
-        });
+      });
+      document.querySelector('form').addEventListener('submit', function(e) {
+        const fingerprintData = document.getElementById('fingerprintData').value;
+        if (!fingerprintData) {
+          e.preventDefault();
+          updateStatus('Please capture a fingerprint first', 'warning');
+          return;
+        }
+
+        try {
+          const data = JSON.parse(fingerprintData);
+          if (!data.fingerprintId) {
+            e.preventDefault();
+            updateStatus('Invalid fingerprint data', 'warning');
+            return;
+          }
+          console.log('Submitting form with fingerprint ID:', data.fingerprintId);
+        } catch (error) {
+          e.preventDefault();
+          console.error('Error parsing fingerprint data:', error);
+          updateStatus('Invalid fingerprint data format', 'warning');
+        }
+      });
     });
   </script>
 </body>

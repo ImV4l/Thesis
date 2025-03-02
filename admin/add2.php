@@ -27,23 +27,23 @@ $formData = $_SESSION['sa_form_data'] ?? [];
                 </div>
                 <div class="card-body">
                     <form class="row g-3" action="add3.php" method="POST" enctype="multipart/form-data">
-                        <?php if(isset($_FILES['image'])): ?>
+                        <?php if (isset($_FILES['image'])): ?>
                             <input type="hidden" name="image" value="<?php echo htmlspecialchars($_FILES['image']['name']); ?>">
                             <?php
                             $tmpImage = $_FILES['image']['tmp_name'];
-                            if(!empty($tmpImage)) {
+                            if (!empty($tmpImage)) {
                                 $_SESSION['temp_image'] = $tmpImage;
                             }
                             ?>
                         <?php endif; ?>
                         <?php
-                        foreach($_POST as $key => $value) {
-                            if(is_array($value)) {
-                                foreach($value as $item) {
-                                    echo '<input type="hidden" name="'.$key.'[]" value="'.htmlspecialchars($item).'">';
+                        foreach ($_POST as $key => $value) {
+                            if (is_array($value)) {
+                                foreach ($value as $item) {
+                                    echo '<input type="hidden" name="' . $key . '[]" value="' . htmlspecialchars($item) . '">';
                                 }
                             } else {
-                                echo '<input type="hidden" name="'.$key.'" value="'.htmlspecialchars($value).'">';
+                                echo '<input type="hidden" name="' . $key . '" value="' . htmlspecialchars($value) . '">';
                             }
                         }
                         ?>
@@ -79,7 +79,7 @@ $formData = $_SESSION['sa_form_data'] ?? [];
                                 <?php foreach ($offices as $office): ?>
                                     <div>
                                         <input type="checkbox" name="work_in[]" value="<?php echo htmlspecialchars($office); ?>"
-                                               <?php echo in_array($office, $formData['work_in'] ?? []) ? 'checked' : ''; ?>>
+                                            <?php echo in_array($office, $formData['work_in'] ?? []) ? 'checked' : ''; ?>>
                                         <?php echo htmlspecialchars($office); ?>
                                     </div>
                                 <?php endforeach; ?>
@@ -90,7 +90,7 @@ $formData = $_SESSION['sa_form_data'] ?? [];
                                 <?php foreach ($laboratories as $laboratory): ?>
                                     <div>
                                         <input type="checkbox" name="work_in[]" value="<?php echo htmlspecialchars($laboratory); ?>"
-                                               <?php echo in_array($laboratory, $formData['work_in'] ?? []) ? 'checked' : ''; ?>>
+                                            <?php echo in_array($laboratory, $formData['work_in'] ?? []) ? 'checked' : ''; ?>>
                                         <?php echo htmlspecialchars($laboratory); ?>
                                     </div>
                                 <?php endforeach; ?>
@@ -101,7 +101,7 @@ $formData = $_SESSION['sa_form_data'] ?? [];
                                 <?php foreach ($manpower_services as $service): ?>
                                     <div>
                                         <input type="checkbox" name="work_in[]" value="<?php echo htmlspecialchars($service); ?>"
-                                               <?php echo in_array($service, $formData['work_in'] ?? []) ? 'checked' : ''; ?>>
+                                            <?php echo in_array($service, $formData['work_in'] ?? []) ? 'checked' : ''; ?>>
                                         <?php echo htmlspecialchars($service); ?>
                                     </div>
                                 <?php endforeach; ?>
@@ -120,9 +120,9 @@ $formData = $_SESSION['sa_form_data'] ?? [];
 </div>
 
 <?php
-if(isset($_FILES['profile_image']) && $_FILES['profile_image']['error'] == UPLOAD_ERR_OK) {
+if (isset($_FILES['profile_image']) && $_FILES['profile_image']['error'] == UPLOAD_ERR_OK) {
     $temp_dir = "../images/uploads/temp/";
-    if(!is_dir($temp_dir)) {
+    if (!is_dir($temp_dir)) {
         mkdir($temp_dir, 0777, true);
     }
 
@@ -133,7 +133,7 @@ if(isset($_FILES['profile_image']) && $_FILES['profile_image']['error'] == UPLOA
     $temp_filename = 'temp_' . time() . '_' . uniqid() . '.' . $extension;
     $temp_filepath = $temp_dir . $temp_filename;
 
-    if(move_uploaded_file($tmp_image, $temp_filepath)) {
+    if (move_uploaded_file($tmp_image, $temp_filepath)) {
         $_SESSION['temp_image'] = $temp_filepath;
     } else {
         error_log("Failed to move uploaded file to temp directory");
@@ -143,3 +143,31 @@ if(isset($_FILES['profile_image']) && $_FILES['profile_image']['error'] == UPLOA
 include('includes/footer.php');
 include('includes/scripts.php');
 ?>
+
+<style>
+    /* Add this to your CSS file or in a style tag */
+    .modal-body {
+        max-height: calc(100vh - 150px);
+        overflow-y: auto;
+        padding: 0.5rem;
+    }
+
+    .form-control-sm {
+        height: calc(1.5em + 0.5rem + 2px);
+        padding: 0.25rem 0.5rem;
+        font-size: 0.875rem;
+    }
+
+    .form-label.small {
+        font-size: 0.875rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .card-header {
+        padding: 0.5rem 1rem;
+    }
+
+    .card-body {
+        padding: 0.5rem;
+    }
+</style>
