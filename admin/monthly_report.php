@@ -18,7 +18,7 @@ $month_name = date('F', mktime(0, 0, 0, $month, 10)); // Get month name from num
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header" style="background-color: #F16E04; color: white;">
                     <h4>Attendance Details</h4>
                 </div>
                 <div class="card-body">

@@ -399,7 +399,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const ESP32_URL = 'http://192.168.1.12';
+        const ESP32_URL = 'http://192.168.1.25';
         let retryTimeout;
 
         async function startFingerprintMatching() {

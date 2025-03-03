@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
 
             $fields = array(
-                'last_name' => '', 'first_name' => '', 'age' => '', 'sex' => '',
+                'student_id' => '', 'last_name' => '', 'first_name' => '', 'age' => '', 'sex' => '',
                 'civil_status' => '', 'date_of_birth' => '', 'city_address' => '', 'contact_no1' => '',
                 'contact_no2' => '', 'contact_no3' => '', 'province_address' => '', 'guardian' => '',
                 'honor_award' => '', 'past_scholar' => '', 'program' => '', 'year' => '',
@@ -156,7 +156,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             try {
                 $user_query = "INSERT INTO student_assistant (
-                    last_name, first_name, age, sex, image, fingerprint_id,
+                    student_id, last_name, first_name, age, sex, image, fingerprint_id,
                     civil_status, date_of_birth, city_address, contact_no1,
                     contact_no2, contact_no3, province_address, guardian,
                     honor_award, past_scholar, program, year, present_scholar,
@@ -177,7 +177,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     throw new Exception("Prepare failed: " . mysqli_error($con));
                 }
                 $params = [
-                    $last_name, $first_name, $age, $sex, 
+                    $student_id, $last_name, $first_name, $age, $sex, 
                     $filename, 
                     $fingerprint_id,
                     $civil_status, $date_of_birth, $city_address, $contact_no1,
@@ -197,6 +197,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 $types = 'sssssi' . str_repeat('s', count($params) - 6); 
                 mysqli_stmt_bind_param($stmt, $types, 
+                    $student_id,
                     $last_name, 
                     $first_name, 
                     $age, 

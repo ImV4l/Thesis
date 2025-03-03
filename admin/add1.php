@@ -17,14 +17,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 ?>
 
-<div class="container-fluid px-4">
+<div class="container px-4">
     <ol class="breadcrumb mb-4"></ol>
     <div class="row">
 
         <div class="col-md-12">
             <?php include('message.php'); ?>
             <div class="card">
-                <div class="card-header">
+                <div class="card-header" style="background-color: #F16E04; color: white;">
                     <h4>Register Student Assistants
                         <a href="view-register.php" class="btn btn-danger float-end">Back</a>
                     </h4>
@@ -33,15 +33,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <form class="row g-3" action="add2.php" method="POST" enctype="multipart/form-data">
 
 
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label class="form-label">Image</label>
                             <input type="file" name="profile_image" class="form-control" accept="image/jpeg,image/png,image/jpg">
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
+                            <label class="form-label">Student ID</label>
+                            <input name="student_id" required class="form-control" id="student_id" value="<?php echo htmlspecialchars($formData['student_id'] ?? ''); ?>">
+                        </div>
+                        <div class="col-md-3">
                             <label class="form-label">Last Name</label>
                             <input name="last_name" required class="form-control" value="<?php echo htmlspecialchars($formData['last_name'] ?? ''); ?>">
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label class="form-label">First Name</label>
                             <input name="first_name" required class="form-control" value="<?php echo htmlspecialchars($formData['first_name'] ?? ''); ?>">
                         </div>

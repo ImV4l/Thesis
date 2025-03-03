@@ -16,7 +16,8 @@ include('includes/header.php');
     <div class="row">
         <div class="col-xl-3 col-md-6">
             <div class="card bg-primary text-white mb-4">
-                <div class="card-body">Offices
+                <div class="card-body">
+                    <i class="fas fa-building"></i> Offices
                     <?php
                     $dash_work_query = "SELECT sa.*, w.work_name 
                            FROM student_assistant sa
@@ -31,8 +32,6 @@ include('includes/header.php');
                         echo '<h4 class="mb-0"> No Data </h4>';
                     }
                     ?>
-
-
                 </div>
                 <div class="card-footer d-flex align-items-center justify-content-between">
                     <a class="small text-white stretched-link" href="offices.php">View Offices</a>
@@ -42,7 +41,8 @@ include('includes/header.php');
         </div>
         <div class="col-xl-3 col-md-6">
             <div class="card bg-warning text-white mb-4">
-                <div class="card-body">Laboratories
+                <div class="card-body">
+                    <i class="fas fa-flask"></i> Laboratories
                     <?php
                     $dash_work_query = "SELECT sa.*, w.work_name 
                            FROM student_assistant sa
@@ -66,7 +66,8 @@ include('includes/header.php');
         </div>
         <div class="col-xl-3 col-md-6">
             <div class="card bg-success text-white mb-4">
-                <div class="card-body">Manpower Services
+                <div class="card-body">
+                    <i class="fas fa-users"></i> Manpower Services
                     <?php
                     $dash_work_query = "SELECT sa.*, w.work_name 
                            FROM student_assistant sa
@@ -88,7 +89,6 @@ include('includes/header.php');
                 </div>
             </div>
         </div>
-
     </div>
 
     <!-- New Analytics Graph Section -->

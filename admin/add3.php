@@ -13,12 +13,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['out_name1'])) {
 $formData = $_SESSION['sa_form_data'] ?? [];
 ?>
 
-<div class="container-fluid px-4">
+<div class="container px-4">
     <ol class="breadcrumb mb-4"></ol>
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header" style="background-color: #F16E04; color: white;">
                     <h4>Register Student Assistants
                         <a href="add2.php" class="btn btn-danger float-end">Back</a>
                     </h4>

@@ -6,22 +6,22 @@ include('includes/header.php');
 <div class="container-fluid px-4">
     <h4 class="mt-4">Bin</h4>
     <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item active">Bin</li>
         <li class="breadcrumb-item active">Accounts Bin</li>
     </ol>
     <div class="row">
 
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header" style="background-color: #F16E04; color: white;">
                     <h4>Deleted Accounts</h4>
                 </div>
                 <div class="card-body">
                     <table id="myTable" class="table table-bordered">
                         <thead>
                             <tr>
-                                <th>ID</th>
                                 <th>Name</th>
-                                <th>UserName</th>
+                                <th>User Name</th>
                                 <th>Email</th>
                                 <th>Role</th>
                                 <th>Action</th>
@@ -36,17 +36,16 @@ include('includes/header.php');
                                 foreach ($query_run as $row) {
                             ?>
                                     <tr>
-                                        <td><?= $row['id']; ?></td>
                                         <td><?= $row['name']; ?></td>
                                         <td><?= $row['username']; ?></td>
                                         <td><?= $row['email']; ?></td>
                                         <td>
                                             <?php
-                                                if ($row['role_as'] == '1') {
-                                                    echo 'Admin';
-                                                }elseif ($row['role_as'] == '0') {
-                                                    echo 'User';
-                                                }
+                                            if ($row['role_as'] == '1') {
+                                                echo 'Admin';
+                                            } elseif ($row['role_as'] == '0') {
+                                                echo 'User';
+                                            }
                                             ?>
                                         </td>
                                         <td>
@@ -55,18 +54,18 @@ include('includes/header.php');
                                         </td>
                                     </tr>
 
-                                    <?php
+                                <?php
 
                                 }
                             } else {
 
-                                    ?>
-                                    <tr>
-                                        <td colspan="6">No Record Found</td>
-                                    </tr>
-                                <?php
-                            }
                                 ?>
+                                <tr>
+                                    <td colspan="6">No Record Found</td>
+                                </tr>
+                            <?php
+                            }
+                            ?>
 
                         </tbody>
                     </table>
@@ -119,35 +118,35 @@ include('includes/header.php');
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    let restoreModal = document.getElementById('restoreModal');
-    restoreModal.addEventListener('show.bs.modal', function(event) {
-        let button = event.relatedTarget;
-        let userId = button.getAttribute('data-id');
-        let userName = button.getAttribute('data-name');
-        let modalTitle = restoreModal.querySelector('.modal-title');
-        let modalBody = restoreModal.querySelector('.modal-body #studentName');
-        let restoreForm = document.getElementById('restoreForm');
-        let restoreUserId = document.getElementById('restoreUserId');
-        
-        modalTitle.textContent = 'Confirm Restore';
-        modalBody.textContent = 'Are you sure you want to restore ' + userName + '?';
-        restoreUserId.value = userId;
-    });
+    document.addEventListener('DOMContentLoaded', function() {
+        let restoreModal = document.getElementById('restoreModal');
+        restoreModal.addEventListener('show.bs.modal', function(event) {
+            let button = event.relatedTarget;
+            let userId = button.getAttribute('data-id');
+            let userName = button.getAttribute('data-name');
+            let modalTitle = restoreModal.querySelector('.modal-title');
+            let modalBody = restoreModal.querySelector('.modal-body #studentName');
+            let restoreForm = document.getElementById('restoreForm');
+            let restoreUserId = document.getElementById('restoreUserId');
 
-    let deleteModal = document.getElementById('deleteModal');
-    deleteModal.addEventListener('show.bs.modal', function(event) {
-        let button = event.relatedTarget;
-        let userId = button.getAttribute('data-id');
-        let userName = button.getAttribute('data-name');
-        let modalBody = deleteModal.querySelector('.modal-body #deleteStudentName');
-        let deleteForm = document.getElementById('deleteForm');
-        let deleteUserId = document.getElementById('deleteUserId');
-        
-        modalBody.textContent = userName;
-        deleteUserId.value = userId;
+            modalTitle.textContent = 'Confirm Restore';
+            modalBody.textContent = 'Are you sure you want to restore ' + userName + '?';
+            restoreUserId.value = userId;
+        });
+
+        let deleteModal = document.getElementById('deleteModal');
+        deleteModal.addEventListener('show.bs.modal', function(event) {
+            let button = event.relatedTarget;
+            let userId = button.getAttribute('data-id');
+            let userName = button.getAttribute('data-name');
+            let modalBody = deleteModal.querySelector('.modal-body #deleteStudentName');
+            let deleteForm = document.getElementById('deleteForm');
+            let deleteUserId = document.getElementById('deleteUserId');
+
+            modalBody.textContent = userName;
+            deleteUserId.value = userId;
+        });
     });
-});
 </script>
 
 <?php

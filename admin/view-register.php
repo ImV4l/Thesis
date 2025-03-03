@@ -14,7 +14,7 @@ include('includes/header.php');
         <div class="col-md-12">
             <!-- <?php include('message.php'); ?> -->
             <div class="card">
-                <div class="card-header">
+                <div class="card-header" style="background-color: #F16E04; color: white;">
                     <h4>Student Assistants
 
                         <a href="add1.php" data-toggle="modal" class="btn btn-primary float-end"><i class="fa fa-plus"></i> New</a>

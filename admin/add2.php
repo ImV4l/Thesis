@@ -13,17 +13,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['work_in'])) {
 $formData = $_SESSION['sa_form_data'] ?? [];
 ?>
 
-<div class="container-fluid px-4">
+<div class="container px-4">
     <ol class="breadcrumb mb-4"></ol>
     <div class="row">
 
         <div class="col-md-12">
             <?php include('message.php'); ?>
             <div class="card">
-                <div class="card-header">
-                    <h4>Register Student Assistants
-                        <a href="add1.php" class="btn btn-danger float-end">Back</a>
-                    </h4>
+                <div class="card-header" style="background-color: #F16E04; color: white;">
+                    <h4>Register Student Assistants</h4>
                 </div>
                 <div class="card-body">
                     <form class="row g-3" action="add3.php" method="POST" enctype="multipart/form-data">
@@ -76,35 +74,41 @@ $formData = $_SESSION['sa_form_data'] ?? [];
                         <div class="row">
                             <div class="col-md-4">
                                 <label for="offices" class="form-label"><strong>Offices</strong></label>
-                                <?php foreach ($offices as $office): ?>
-                                    <div>
-                                        <input type="checkbox" name="work_in[]" value="<?php echo htmlspecialchars($office); ?>"
-                                            <?php echo in_array($office, $formData['work_in'] ?? []) ? 'checked' : ''; ?>>
-                                        <?php echo htmlspecialchars($office); ?>
-                                    </div>
-                                <?php endforeach; ?>
+                                <select name="work_in[]" class="form-select" id="offices">
+                                    <option value="">Select an office</option>
+                                    <?php foreach ($offices as $office): ?>
+                                        <option value="<?php echo htmlspecialchars($office); ?>"
+                                            <?php echo in_array($office, $formData['work_in'] ?? []) ? 'selected' : ''; ?>>
+                                            <?php echo htmlspecialchars($office); ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
                             </div>
 
                             <div class="col-md-4">
                                 <label for="laboratories" class="form-label"><strong>Laboratories</strong></label>
-                                <?php foreach ($laboratories as $laboratory): ?>
-                                    <div>
-                                        <input type="checkbox" name="work_in[]" value="<?php echo htmlspecialchars($laboratory); ?>"
-                                            <?php echo in_array($laboratory, $formData['work_in'] ?? []) ? 'checked' : ''; ?>>
-                                        <?php echo htmlspecialchars($laboratory); ?>
-                                    </div>
-                                <?php endforeach; ?>
+                                <select name="work_in[]" class="form-select" id="laboratories">
+                                    <option value="">Select a laboratory</option>
+                                    <?php foreach ($laboratories as $laboratory): ?>
+                                        <option value="<?php echo htmlspecialchars($laboratory); ?>"
+                                            <?php echo in_array($laboratory, $formData['work_in'] ?? []) ? 'selected' : ''; ?>>
+                                            <?php echo htmlspecialchars($laboratory); ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
                             </div>
 
                             <div class="col-md-4">
                                 <label for="manpower_services" class="form-label"><strong>Manpower Services</strong></label>
-                                <?php foreach ($manpower_services as $service): ?>
-                                    <div>
-                                        <input type="checkbox" name="work_in[]" value="<?php echo htmlspecialchars($service); ?>"
-                                            <?php echo in_array($service, $formData['work_in'] ?? []) ? 'checked' : ''; ?>>
-                                        <?php echo htmlspecialchars($service); ?>
-                                    </div>
-                                <?php endforeach; ?>
+                                <select name="work_in[]" class="form-select" id="manpower_services">
+                                    <option value="">Select a service</option>
+                                    <?php foreach ($manpower_services as $service): ?>
+                                        <option value="<?php echo htmlspecialchars($service); ?>"
+                                            <?php echo in_array($service, $formData['work_in'] ?? []) ? 'selected' : ''; ?>>
+                                            <?php echo htmlspecialchars($service); ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
                             </div>
                         </div>
 

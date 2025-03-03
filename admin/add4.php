@@ -86,7 +86,7 @@ include('includes/header.php');
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      const ESP32_URL = 'http://192.168.1.12'; // Your ESP32's IP
+      const ESP32_URL = 'http://192.168.1.25'; // Your ESP32's IP
       let capturedTemplate = null;
       let isCapturing = false;
       let deviceConnected = false;

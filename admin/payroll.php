@@ -9,7 +9,7 @@ include('includes/header.php');
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header" style="background-color: #F16E04; color: white;">
                     <h4>Payroll</h4>
                 </div>
                 <div class="content-wrapper">

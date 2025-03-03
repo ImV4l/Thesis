@@ -16,7 +16,8 @@ include('includes/header.php');
     <div class="row">
         <div class="col-xl-3 col-md-6">
             <div class="card bg-primary text-white mb-4">
-                <div class="card-body">Users Accounts
+                <div class="card-body">
+                    <i class="fas fa-user"></i> Users Accounts
                     <?php
                     // Query to count registered users in admin table
                     $user_query = "SELECT COUNT(*) as user_total FROM admin WHERE role_as='0'";
@@ -37,7 +38,8 @@ include('includes/header.php');
         </div>
         <div class="col-xl-3 col-md-6">
             <div class="card bg-warning text-white mb-4">
-                <div class="card-body">Student Assistant
+                <div class="card-body">
+                    <i class="fas fa-user-graduate"></i> Student Assistant Accounts
                     <?php
                     // Query to count registered students in register_sa table
                     $student_query = "SELECT COUNT(*) as student_total FROM register_sa";

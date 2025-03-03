@@ -4,22 +4,23 @@ include('includes/header.php');
 ?>
 
 <div class="container-fluid px-4">
-    <h4 class="mt-4">Student Assistants</h4>
+    <h4 class="mt-4">Bin</h4>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item active">Bin</li>
+        <li class="breadcrumb-item active">Student Assistant Bin</li>
     </ol>
     <div class="row">
 
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header" style="background-color: #F16E04; color: white;">
                     <h4>Deleted Student Assistant</h4>
                 </div>
                 <div class="card-body">
                     <table id="myTable" class="table table-bordered">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>Student ID</th>
                                 <th>Last Name</th>
                                 <th>First Name</th>
                                 <th>Program</th>
@@ -37,7 +38,7 @@ include('includes/header.php');
                                 foreach ($query_run as $row) {
                             ?>
                                     <tr>
-                                        <td><?= $row['id']; ?></td>
+                                        <td><?= $row['student_id']; ?></td>
                                         <td><?= $row['last_name']; ?></td>
                                         <td><?= $row['first_name']; ?></td>
                                         <td><?= $row['program']; ?></td>
@@ -48,13 +49,13 @@ include('includes/header.php');
                                             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="<?= $row['id']; ?>" data-name="<?= htmlspecialchars($row['last_name'] . ' ' . $row['first_name']); ?>">Delete Permanently</button>
                                         </td>
                                     </tr>
-                            <?php
+                                <?php
                                 }
                             } else {
-                            ?>
-                                    <tr>
-                                        <td colspan="7">No Records Found</td>
-                                    </tr>
+                                ?>
+                                <tr>
+                                    <td colspan="7">No Records Found</td>
+                                </tr>
                             <?php
                             }
                             ?>
@@ -109,53 +110,53 @@ include('includes/header.php');
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    let restoreModal = document.getElementById('restoreModal');
-    restoreModal.addEventListener('show.bs.modal', function(event) {
-        let button = event.relatedTarget;
-        let userId = button.getAttribute('data-id');
-        let userName = button.getAttribute('data-name');
-        let modalTitle = restoreModal.querySelector('.modal-title');
-        let modalBody = restoreModal.querySelector('.modal-body #studentName');
-        let restoreForm = document.getElementById('restoreForm');
-        let restoreUserId = document.getElementById('restoreUserId');
-        
-        modalTitle.textContent = 'Confirm Restore';
-        modalBody.textContent = 'Are you sure you want to restore ' + userName + '?';
-        restoreUserId.value = userId;
+    document.addEventListener('DOMContentLoaded', function() {
+        let restoreModal = document.getElementById('restoreModal');
+        restoreModal.addEventListener('show.bs.modal', function(event) {
+            let button = event.relatedTarget;
+            let userId = button.getAttribute('data-id');
+            let userName = button.getAttribute('data-name');
+            let modalTitle = restoreModal.querySelector('.modal-title');
+            let modalBody = restoreModal.querySelector('.modal-body #studentName');
+            let restoreForm = document.getElementById('restoreForm');
+            let restoreUserId = document.getElementById('restoreUserId');
+
+            modalTitle.textContent = 'Confirm Restore';
+            modalBody.textContent = 'Are you sure you want to restore ' + userName + '?';
+            restoreUserId.value = userId;
+        });
+
+        let deleteModal = document.getElementById('deleteModal');
+        deleteModal.addEventListener('show.bs.modal', function(event) {
+            let button = event.relatedTarget;
+            let userId = button.getAttribute('data-id');
+            let userName = button.getAttribute('data-name');
+            let modalBody = deleteModal.querySelector('.modal-body #deleteStudentName');
+            let deleteForm = document.getElementById('deleteForm');
+            let deleteUserId = document.getElementById('deleteUserId');
+
+            modalBody.textContent = userName;
+            deleteUserId.value = userId;
+        });
     });
 
-    let deleteModal = document.getElementById('deleteModal');
-    deleteModal.addEventListener('show.bs.modal', function(event) {
-        let button = event.relatedTarget;
-        let userId = button.getAttribute('data-id');
-        let userName = button.getAttribute('data-name');
-        let modalBody = deleteModal.querySelector('.modal-body #deleteStudentName');
-        let deleteForm = document.getElementById('deleteForm');
-        let deleteUserId = document.getElementById('deleteUserId');
-        
-        modalBody.textContent = userName;
-        deleteUserId.value = userId;
+    // Initialize DataTables
+    $(document).ready(function() {
+        $('#myTable').DataTable({
+            "dom": '<"top"f>rt<"bottom"lip><"clear">',
+            "responsive": true,
+            "pageLength": 10,
+            "ordering": true,
+            "info": true,
+            "lengthChange": true,
+            "searching": true,
+            "paging": true,
+            "language": {
+                "lengthMenu": "Show _MENU_ entries",
+                "info": "Showing _START_ to _END_ of _TOTAL_ entries"
+            }
+        });
     });
-});
-
-// Initialize DataTables
-$(document).ready(function() {
-    $('#myTable').DataTable({
-        "dom": '<"top"f>rt<"bottom"lip><"clear">',
-        "responsive": true,
-        "pageLength": 10,
-        "ordering": true,
-        "info": true,
-        "lengthChange": true,
-        "searching": true,
-        "paging": true,
-        "language": {
-            "lengthMenu": "Show _MENU_ entries",
-            "info": "Showing _START_ to _END_ of _TOTAL_ entries"
-        }
-    });
-});
 </script>
 
 <?php

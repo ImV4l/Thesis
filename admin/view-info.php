@@ -13,8 +13,8 @@ $total_hours_worked = 0;
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">
-                    <h4 class="mb-0">Student Assistant Information
+                <div class="card-header" style="background-color: #F16E04; color: white;">
+                    <h4>Student Assistant Information
                         <a href="view-register.php" class="btn btn-danger float-end">Back</a>
                     </h4>
                 </div>
