@@ -48,7 +48,7 @@ $total_hours_worked = 0;
                                     <!-- Left Column - Personal Information -->
                                     <div class="col-md-6">
                                         <div class="card mb-4">
-                                            <div class="card-header">
+                                        <div class="card-header d-flex justify-content-between align-items-center" style="background-color: #F16E04; color: white;">
                                                 <h5 class="mb-0">Personal Information</h5>
                                             </div>
                                             <div class="card-body">
@@ -154,7 +154,7 @@ $total_hours_worked = 0;
                                     <!-- Right Column - References & Family -->
                                     <div class="col-md-6">
                                         <div class="card mb-4">
-                                            <div class="card-header">
+                                        <div class="card-header d-flex justify-content-between align-items-center" style="background-color: #F16E04; color: white;">
                                                 <h5 class="mb-0">References</h5>
                                             </div>
                                             <div class="card-body">
@@ -235,7 +235,7 @@ $total_hours_worked = 0;
                                         </div>
 
                                         <div class="card">
-                                            <div class="card-header">
+                                        <div class="card-header d-flex justify-content-between align-items-center" style="background-color: #F16E04; color: white;">
                                                 <h5 class="mb-0">Family Information</h5>
                                             </div>
                                             <div class="card-body">
@@ -280,7 +280,7 @@ $total_hours_worked = 0;
 
                                 <!-- Attendance Section -->
                                 <div class="card mt-4">
-                                    <div class="card-header">
+                                <div class="card-header d-flex justify-content-between align-items-center" style="background-color: #F16E04; color: white;">
                                         <h5 class="mb-0">Daily Time Record
                                             <div class="float-end d-flex align-items-center">
                                                 <div class="me-2" style="font-size: 0.8rem;">
