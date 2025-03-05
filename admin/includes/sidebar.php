@@ -60,6 +60,10 @@
                         </div>
                     </nav>
                 </div>
+                <a class="nav-link" href="student_schedule.php">
+                        <div class="sb-nav-link-icon"><i class="fas fa-clock"></i></div>
+                        Schedule
+                    </a>
 
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseBins" aria-expanded="false" aria-controls="collapseBins">
                     <div class="sb-nav-link-icon"><i class="fas fa-trash"></i></div>

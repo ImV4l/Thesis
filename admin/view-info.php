@@ -48,7 +48,7 @@ $total_hours_worked = 0;
                                     <!-- Left Column - Personal Information -->
                                     <div class="col-md-6">
                                         <div class="card mb-4">
-                                        <div class="card-header d-flex justify-content-between align-items-center" style="background-color: #F16E04; color: white;">
+                                            <div class="card-header d-flex justify-content-between align-items-center" style="background-color: #F16E04; color: white;">
                                                 <h5 class="mb-0">Personal Information</h5>
                                             </div>
                                             <div class="card-body">
@@ -154,7 +154,7 @@ $total_hours_worked = 0;
                                     <!-- Right Column - References & Family -->
                                     <div class="col-md-6">
                                         <div class="card mb-4">
-                                        <div class="card-header d-flex justify-content-between align-items-center" style="background-color: #F16E04; color: white;">
+                                            <div class="card-header d-flex justify-content-between align-items-center" style="background-color: #F16E04; color: white;">
                                                 <h5 class="mb-0">References</h5>
                                             </div>
                                             <div class="card-body">
@@ -235,7 +235,7 @@ $total_hours_worked = 0;
                                         </div>
 
                                         <div class="card">
-                                        <div class="card-header d-flex justify-content-between align-items-center" style="background-color: #F16E04; color: white;">
+                                            <div class="card-header d-flex justify-content-between align-items-center" style="background-color: #F16E04; color: white;">
                                                 <h5 class="mb-0">Family Information</h5>
                                             </div>
                                             <div class="card-body">
@@ -280,36 +280,35 @@ $total_hours_worked = 0;
 
                                 <!-- Attendance Section -->
                                 <div class="card mt-4">
-                                <div class="card-header d-flex justify-content-between align-items-center" style="background-color: #F16E04; color: white;">
-                                        <h5 class="mb-0">Daily Time Record
-                                            <div class="float-end d-flex align-items-center">
-                                                <div class="me-2" style="font-size: 0.8rem;">
-                                                    <div class="input-group input-group-sm">
-                                                        <input type="date" id="startDate" class="form-control">
-                                                        <span class="input-group-text">to</span>
-                                                        <input type="date" id="endDate" class="form-control">
-                                                    </div>
+                                    <div class="card-header d-flex justify-content-between align-items-center" style="background-color: #F16E04; color: white;">
+                                        <h5 class="mb-0">Daily Time Record</h5>
+                                        <div class="d-flex align-items-center">
+                                            <div class="me-2" style="font-size: 0.8rem;">
+                                                <div class="input-group input-group-sm">
+                                                    <input type="date" id="startDate" class="form-control">
+                                                    <span class="input-group-text">to</span>
+                                                    <input type="date" id="endDate" class="form-control">
                                                 </div>
-                                                <button class='btn btn-primary btn-sm payslip-btn me-2'
-                                                    data-id='<?= $user['id'] ?>'
-                                                    data-name='<?= $user['first_name'] ?> <?= $user['last_name'] ?>'
-                                                    data-work='<?= $user['work'] ?>'
-                                                    data-hours='<?= number_format($total_hours_worked, 2) ?>'
-                                                    data-rate='15'
-                                                    data-salary='<?= number_format($total_salary, 2) ?>'>
-                                                    <i class='fa fa-print'></i> DTR
-                                                </button>
-                                                <button class='btn btn-success btn-sm payroll-btn me-2'
-                                                    data-id='<?= $user['id'] ?>'
-                                                    data-name='<?= $user['first_name'] ?> <?= $user['last_name'] ?>'
-                                                    data-work='<?= $user['work'] ?>'
-                                                    data-hours='<?= number_format($total_hours_worked, 2) ?>'
-                                                    data-rate='15'
-                                                    data-salary='<?= number_format($total_salary, 2) ?>'>
-                                                    <i class='fa fa-print'></i> Payroll
-                                                </button>
                                             </div>
-                                        </h5>
+                                            <button class='btn btn-primary btn-sm payslip-btn me-2'
+                                                data-id='<?= $user['id'] ?>'
+                                                data-name='<?= $user['first_name'] ?> <?= $user['last_name'] ?>'
+                                                data-work='<?= $user['work'] ?>'
+                                                data-hours='<?= number_format($total_hours_worked, 2) ?>'
+                                                data-rate='15'
+                                                data-salary='<?= number_format($total_salary, 2) ?>'>
+                                                <i class='fa fa-print'></i> DTR
+                                            </button>
+                                            <button class='btn btn-success btn-sm payroll-btn me-2'
+                                                data-id='<?= $user['id'] ?>'
+                                                data-name='<?= $user['first_name'] ?> <?= $user['last_name'] ?>'
+                                                data-work='<?= $user['work'] ?>'
+                                                data-hours='<?= number_format($total_hours_worked, 2) ?>'
+                                                data-rate='15'
+                                                data-salary='<?= number_format($total_salary, 2) ?>'>
+                                                <i class='fa fa-print'></i> Payroll
+                                            </button>
+                                        </div>
                                     </div>
                                     <div class="card-body">
                                         <div class="table-responsive">

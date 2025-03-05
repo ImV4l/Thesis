@@ -199,3 +199,24 @@ if (isset($_POST['update_user'])) {
         exit();
     }
 }
+
+if (isset($_POST['add_schedule'])) {
+    $student_id = mysqli_real_escape_string($con, $_POST['student_id']);
+    $weekday = mysqli_real_escape_string($con, $_POST['weekday']);
+    $time_in = mysqli_real_escape_string($con, $_POST['time_in']);
+    $time_out = mysqli_real_escape_string($con, $_POST['time_out']);
+
+    $query = "INSERT INTO schedules (student_id, weekday, time_in, time_out) 
+              VALUES ('$student_id', '$weekday', '$time_in', '$time_out')";
+
+    if (mysqli_query($con, $query)) {
+        $_SESSION['status'] = "Schedule added successfully!";
+        $_SESSION['status_type'] = "success";
+    } else {
+        $_SESSION['status'] = "Error adding schedule: " . mysqli_error($con);
+        $_SESSION['status_type'] = "danger";
+    }
+
+    header("Location: student_schedule.php");
+    exit();
+}
