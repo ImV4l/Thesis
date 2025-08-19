@@ -18,7 +18,7 @@
                 <div class="sb-sidenav-menu-heading">Manage</div>
 
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                    <div class="sb-nav-link-icon"><i class="fas fa-list"></i></div>
+                    <div class="sb-nav-link-icon"><i class="fas fa-building"></i></div>
                     Department
                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
@@ -80,14 +80,14 @@
 
                 <div class="sb-sidenav-menu-heading">Report</div>
                     <a class="nav-link" href="report.php">
-                        <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                         Time Log Report
                     </a>
-                <a class="nav-link" href="payroll.php">
-                    <div class="sb-nav-link-icon"><i class="fas fa-copy"></i></div>
+                    <a class="nav-link" href="payroll.php">
+                        <div class="sb-nav-link-icon"><i class="fas fa-copy"></i></div>
                     Payroll
-                </a>
-            </div>
+                    </a>
+                </div>
         </div>
 
         

@@ -32,7 +32,7 @@ include('includes/header.php');
                                     <th>Year</th>
                                     <th>Work In</th>
                                     <th>Option</th>
-                                    <th>Status</th>
+                                    <th>Condition</th> 
                                 </tr>
                             </thead>
                             <tbody>
@@ -63,9 +63,9 @@ include('includes/header.php');
                                                 <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="<?= $row['id']; ?>" data-name="<?= htmlspecialchars($row['last_name'] . ' ' . $row['first_name']); ?>">Delete</button>
                                             </td>
                                             <td>
-                                                <select name="status" class="form-select status-select" data-id="<?= $row['id']; ?>" style="background-color: <?= ($row['status1'] == 'Active') ? '#d4edda' : '#f8d7da'; ?>">
-                                                    <option value="Active" <?= ($row['status1'] == 'Active') ? 'selected' : ''; ?>>Active</option>
-                                                    <option value="Not Active" <?= ($row['status1'] == 'Not Active') ? 'selected' : ''; ?>>Not Active</option>
+                                                <select name="status1" class="form-select status-select" data-id="<?= $row['id']; ?>" style="background-color: <?= ($row['status1'] == '0') ? '#d4edda' : '#f8d7da'; ?>">
+                                                    <option value="0" <?= ($row['status1'] == '0') ? 'selected' : ''; ?>>Active</option>
+                                                    <option value="1" <?= ($row['status1'] == '1') ? 'selected' : ''; ?>>Not Active</option>
                                                 </select>
                                             </td>
                                         </tr>
@@ -134,7 +134,7 @@ include('includes/header.php');
                 const newStatus = this.value;
 
                 // Update the background color immediately
-                this.style.backgroundColor = (newStatus === 'Active') ? '#d4edda' : '#f8d7da';
+                this.style.backgroundColor = (newStatus === '0') ? '#d4edda' : '#f8d7da';
 
                 fetch('update_status.php', {
                         method: 'POST',
@@ -143,14 +143,12 @@ include('includes/header.php');
                         },
                         body: JSON.stringify({
                             id: userId,
-                            status: newStatus
+                            status1: newStatus
                         })
                     })
                     .then(response => response.json())
                     .then(data => {
-                        if (data.success) {
-                            alert('Status updated successfully');
-                        } else {
+                        if (!data.success) {
                             alert('Failed to update status');
                         }
                     })

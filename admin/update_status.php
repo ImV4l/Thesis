@@ -5,11 +5,11 @@ include('config/dbcon.php');
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = json_decode(file_get_contents('php://input'), true);
     $id = $data['id'];
-    $status = $data['status'];
+    $status1 = $data['status1'];
 
     $query = "UPDATE student_assistant SET status1 = ? WHERE id = ?";
     $stmt = mysqli_prepare($con, $query);
-    mysqli_stmt_bind_param($stmt, 'si', $status, $id);
+    mysqli_stmt_bind_param($stmt, 'ii', $status1, $id);
 
     if (mysqli_stmt_execute($stmt)) {
         echo json_encode(['success' => true]);

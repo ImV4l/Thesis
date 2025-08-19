@@ -10,7 +10,11 @@ include('includes/header.php');
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header" style="background-color: #F16E04; color: white;">
-                    <h4>Payroll</h4>
+                    <h4>Payroll
+                        <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#updateSalaryModal">
+                            <i class="fa fa-edit"></i> Update Salary
+                        </button>
+                    </h4>
                 </div>
                 <div class="content-wrapper">
                     <div class="card-body">
@@ -27,7 +31,13 @@ include('includes/header.php');
                             </thead>
                             <tbody>
                                 <?php
-                                $hourly_rate = 15; // Example hourly rate
+                                $rate_file = 'salary_rate.txt';
+                                if (file_exists($rate_file) && is_readable($rate_file)) {
+                                    $file_content = file_get_contents($rate_file);
+                                    $hourly_rate = is_numeric($file_content) ? floatval($file_content) : 15;
+                                } else {
+                                    $hourly_rate = 15; // Default value
+                                }
                                 $query = "SELECT sa.id, sa.last_name, sa.first_name, sa.work, 
                                           SUM(TIMESTAMPDIFF(MINUTE, a.time_in, a.time_out) / 60.0) AS total_hours
                                           FROM student_assistant sa
@@ -171,6 +181,68 @@ include('includes/header.php');
             printWindow.document.close();
         });
     });
+</script>
+
+<!-- Update Salary Modal -->
+<div class="modal fade" id="updateSalaryModal" tabindex="-1" aria-labelledby="updateSalaryModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateSalaryModalLabel">Update Salary</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="updateSalaryForm">
+                    <div class="mb-3">
+                        <label for="hourlyRate" class="form-label">Update Salary (Hourly Rate)</label>
+                        <input type="number" class="form-control" id="hourlyRate" name="hourlyRate" value="<?= htmlspecialchars($hourly_rate) ?>" step="0.01" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="saveSalaryBtn">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const saveSalaryBtn = document.getElementById('saveSalaryBtn');
+    if (saveSalaryBtn) {
+        saveSalaryBtn.addEventListener('click', function() {
+            const hourlyRateInput = document.getElementById('hourlyRate');
+            const newRate = hourlyRateInput.value;
+
+            if (newRate === '' || isNaN(newRate) || parseFloat(newRate) < 0) {
+                alert('Please enter a valid, non-negative number for the hourly rate.');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('hourlyRate', newRate);
+
+            fetch('update_salary.php', {
+                method: 'POST',
+                body: new URLSearchParams(formData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(data.message);
+                    window.location.reload();
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while updating the salary rate.');
+            });
+        });
+    }
+});
 </script>
 
 <?php
