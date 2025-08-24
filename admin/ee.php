@@ -44,7 +44,9 @@ include('includes/header.php');
                                         <td><?= $row['program']; ?></td>
                                         <td><?= $row['year']; ?></td>
                                         <td><?= $row['work']; ?></td>
-                                        <td style="color: <?= ($row['status1'] == 'Active') ? 'green' : 'red'; ?>"><?= $row['status1']; ?></td>
+                                        <td style="color: <?= ($row['status1'] == '0') ? 'green' : 'red'; ?>">
+                                            <?= ($row['status1'] == '0') ? 'Active' : 'Not Active'; ?>
+                                        </td>
                                     </tr>
                                 <?php
                                 }

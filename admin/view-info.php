@@ -290,24 +290,18 @@ $total_hours_worked = 0;
                                                     <input type="date" id="endDate" class="form-control">
                                                 </div>
                                             </div>
-                                            <button class='btn btn-primary btn-sm payslip-btn me-2'
+                                            <button class='btn btn-info btn-sm view-dtr-btn me-2' 
                                                 data-id='<?= $user['id'] ?>'
                                                 data-name='<?= $user['first_name'] ?> <?= $user['last_name'] ?>'
-                                                data-work='<?= $user['work'] ?>'
-                                                data-hours='<?= number_format($total_hours_worked, 2) ?>'
-                                                data-rate='15'
-                                                data-salary='<?= number_format($total_salary, 2) ?>'>
-                                                <i class='fa fa-print'></i> DTR
+                                                data-work='<?= $user['work'] ?>'>
+                                                <i class='fa fa-eye'></i> View DTR
                                             </button>
-                                            <button class='btn btn-success btn-sm payroll-btn me-2'
-                                                data-id='<?= $user['id'] ?>'
-                                                data-name='<?= $user['first_name'] ?> <?= $user['last_name'] ?>'
-                                                data-work='<?= $user['work'] ?>'
-                                                data-hours='<?= number_format($total_hours_worked, 2) ?>'
-                                                data-rate='15'
-                                                data-salary='<?= number_format($total_salary, 2) ?>'>
-                                                <i class='fa fa-print'></i> Payroll
-                                            </button>
+                                                                                         <button class='btn btn-warning btn-sm view-payroll-btn me-2' 
+                                                 data-id='<?= $user['id'] ?>'
+                                                 data-name='<?= $user['first_name'] ?> <?= $user['last_name'] ?>'
+                                                 data-work='<?= $user['work'] ?>'>
+                                                 <i class='fa fa-eye'></i> View Payroll
+                                             </button>
                                         </div>
                                     </div>
                                     <div class="card-body">
@@ -671,6 +665,452 @@ $total_hours_worked = 0;
             hour: '2-digit',
             minute: '2-digit'
         });
+    }
+
+    // View DTR for specific date
+    document.querySelectorAll('.view-dtr-btn').forEach(button => {
+        button.addEventListener('click', async function(e) {
+            e.preventDefault();
+
+            const name = this.getAttribute('data-name');
+            const work = this.getAttribute('data-work');
+            const userId = this.getAttribute('data-id');
+
+            // Get selected dates from the date pickers
+            const startDateInput = document.getElementById('startDate');
+            const endDateInput = document.getElementById('endDate');
+
+            // Validate dates
+            if (!startDateInput.value || !endDateInput.value) {
+                alert('Please select both start and end dates');
+                return;
+            }
+
+            const startDate = new Date(startDateInput.value);
+            const endDate = new Date(endDateInput.value);
+
+            if (startDate > endDate) {
+                alert('Start date cannot be after end date');
+                return;
+            }
+
+            // Fetch attendance data for the selected range
+            const response = await fetch(`get_attendance.php?user_id=${userId}&start_date=${startDate.toISOString().split('T')[0]}&end_date=${endDate.toISOString().split('T')[0]}`);
+            const attendanceData = await response.json();
+
+            // Calculate overtime
+            const overtimeData = calculateOvertime(attendanceData);
+
+            // Create modal content
+            const modalContent = `
+                <div class="modal fade" id="viewDTRModal" tabindex="-1" aria-labelledby="viewDTRModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="viewDTRModalLabel">Daily Time Record - ${name}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <strong>Name:</strong> ${name}
+                                    </div>
+                                    <div class="col-md-6">
+                                        <strong>Work In:</strong> ${work}
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <strong>Date Range:</strong> ${startDate.toLocaleDateString()} - ${endDate.toLocaleDateString()}
+                                    </div>
+                                    <div class="col-md-6">
+                                        <strong>Regular Hours per Day:</strong> 8 hours
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th colspan="2">AM</th>
+                                                <th colspan="2">PM</th>
+                                                <th>Total Hours</th>
+                                                <th>Regular Hours</th>
+                                                <th>Overtime Hours</th>
+                                            </tr>
+                                            <tr>
+                                                <th></th>
+                                                <th>Time In</th>
+                                                <th>Time Out</th>
+                                                <th>Time In</th>
+                                                <th>Time Out</th>
+                                                <th></th>
+                                                <th>(8 hrs max)</th>
+                                                <th>(Excess)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            ${generateAttendanceRowsWithOvertime(attendanceData)}
+                                        </tbody>
+                                        <tfoot>
+                                            <tr class="table-info">
+                                                <td colspan="5" class="text-end"><strong>Total Regular Hours:</strong></td>
+                                                <td><strong>${overtimeData.totalRegularHours.toFixed(2)}</strong></td>
+                                                <td colspan="2"></td>
+                                            </tr>
+                                            <tr class="table-warning">
+                                                <td colspan="5" class="text-end"><strong>Total Overtime Hours:</strong></td>
+                                                <td><strong>${overtimeData.totalOvertimeHours.toFixed(2)}</strong></td>
+                                                <td colspan="2"></td>
+                                            </tr>
+                                            <tr class="table-primary">
+                                                <td colspan="5" class="text-end"><strong>Grand Total Hours:</strong></td>
+                                                <td><strong>${overtimeData.grandTotalHours.toFixed(2)}</strong></td>
+                                                <td colspan="2"></td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-12">
+                                        <div class="alert alert-info">
+                                            <strong>Summary:</strong><br>
+                                            • Regular Hours (8 hrs/day): ${overtimeData.totalRegularHours.toFixed(2)} hours<br>
+                                            • Overtime Hours (excess): ${overtimeData.totalOvertimeHours.toFixed(2)} hours<br>
+                                            • Grand Total: ${overtimeData.grandTotalHours.toFixed(2)} hours
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" onclick="printDTRModal()">Print</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Remove existing modal if any
+            const existingModal = document.getElementById('viewDTRModal');
+            if (existingModal) {
+                existingModal.remove();
+            }
+
+            // Add modal to body
+            document.body.insertAdjacentHTML('beforeend', modalContent);
+
+            // Show modal
+            const modal = new bootstrap.Modal(document.getElementById('viewDTRModal'));
+            modal.show();
+        });
+    });
+
+    // Helper function to generate attendance rows for modal with overtime
+    function generateAttendanceRowsWithOvertime(attendanceData) {
+        let rows = '';
+
+        for (const [date, times] of Object.entries(attendanceData)) {
+            const dateObj = new Date(date);
+            const formattedDate = dateObj.toLocaleDateString();
+
+            // Calculate hours worked for AM and PM
+            const amTimeIn = times.am.timeIn ? new Date(`2000-01-01T${times.am.timeIn}`) : null;
+            const amTimeOut = times.am.timeOut ? new Date(`2000-01-01T${times.am.timeOut}`) : null;
+            const pmTimeIn = times.pm.timeIn ? new Date(`2000-01-01T${times.pm.timeIn}`) : null;
+            const pmTimeOut = times.pm.timeOut ? new Date(`2000-01-01T${times.pm.timeOut}`) : null;
+
+            const amHours = amTimeIn && amTimeOut ? ((amTimeOut - amTimeIn) / (1000 * 60 * 60)).toFixed(2) : 0;
+            const pmHours = pmTimeIn && pmTimeOut ? ((pmTimeOut - pmTimeIn) / (1000 * 60 * 60)).toFixed(2) : 0;
+            const totalDayHours = (parseFloat(amHours) + parseFloat(pmHours)).toFixed(2);
+
+            // Calculate overtime (anything over 8 hours is overtime)
+            const regularHours = Math.min(parseFloat(totalDayHours), 8.0).toFixed(2);
+            const overtimeHours = Math.max(parseFloat(totalDayHours) - 8.0, 0).toFixed(2);
+
+            // Add color coding for overtime
+            const rowClass = parseFloat(overtimeHours) > 0 ? 'table-warning' : '';
+
+            rows += `
+                <tr class="${rowClass}">
+                    <td>${formattedDate}</td>
+                    <td>${times.am.timeIn ? formatTime(times.am.timeIn) : ''}</td>
+                    <td>${times.am.timeOut ? formatTime(times.am.timeOut) : ''}</td>
+                    <td>${times.pm.timeIn ? formatTime(times.pm.timeIn) : ''}</td>
+                    <td>${times.pm.timeOut ? formatTime(times.pm.timeOut) : ''}</td>
+                    <td>${totalDayHours}</td>
+                    <td>${regularHours}</td>
+                    <td>${overtimeHours}</td>
+                </tr>
+            `;
+        }
+
+        return rows;
+    }
+
+    // Helper function to calculate overtime
+    function calculateOvertime(attendanceData) {
+        let totalRegularHours = 0;
+        let totalOvertimeHours = 0;
+        let grandTotalHours = 0;
+
+        for (const times of Object.values(attendanceData)) {
+            const amTimeIn = times.am.timeIn ? new Date(`2000-01-01T${times.am.timeIn}`) : null;
+            const amTimeOut = times.am.timeOut ? new Date(`2000-01-01T${times.am.timeOut}`) : null;
+            const pmTimeIn = times.pm.timeIn ? new Date(`2000-01-01T${times.pm.timeIn}`) : null;
+            const pmTimeOut = times.pm.timeOut ? new Date(`2000-01-01T${times.pm.timeOut}`) : null;
+
+            const amHours = amTimeIn && amTimeOut ? ((amTimeOut - amTimeIn) / (1000 * 60 * 60)) : 0;
+            const pmHours = pmTimeIn && pmTimeOut ? ((pmTimeOut - pmTimeIn) / (1000 * 60 * 60)) : 0;
+            const totalDayHours = amHours + pmHours;
+
+            // Calculate regular and overtime hours
+            const regularHours = Math.min(totalDayHours, 8.0);
+            const overtimeHours = Math.max(totalDayHours - 8.0, 0);
+
+            totalRegularHours += regularHours;
+            totalOvertimeHours += overtimeHours;
+            grandTotalHours += totalDayHours;
+        }
+
+        return {
+            totalRegularHours,
+            totalOvertimeHours,
+            grandTotalHours
+        };
+    }
+
+    // Function to print DTR modal
+    function printDTRModal() {
+        const modalContent = document.querySelector('#viewDTRModal .modal-body').innerHTML;
+        const printWindow = window.open('', '_blank', 'width=1000,height=800');
+        printWindow.document.write(`
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Daily Time Record with Overtime</title>
+                <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+                <style>
+                    @media print {
+                        .no-print { display: none; }
+                        .table-warning { background-color: #fff3cd !important; }
+                        .table-info { background-color: #d1ecf1 !important; }
+                        .table-primary { background-color: #cce5ff !important; }
+                    }
+                    body { margin: 20px; }
+                    .table { font-size: 12px; }
+                    .table th, .table td { padding: 8px 4px; }
+                </style>
+            </head>
+            <body>
+                <div class="container-fluid">
+                    ${modalContent}
+                </div>
+                <div class="text-center mt-4 no-print">
+                    <button onclick="window.print()" class="btn btn-primary">Print/Save as PDF</button>
+                </div>
+            </body>
+            </html>
+        `);
+        printWindow.document.close();
+    }
+
+    // View Payroll for specific date
+    document.querySelectorAll('.view-payroll-btn').forEach(button => {
+        button.addEventListener('click', async function(e) {
+            e.preventDefault();
+
+            const name = this.getAttribute('data-name');
+            const work = this.getAttribute('data-work');
+            const userId = this.getAttribute('data-id');
+
+            // Get selected dates from the date pickers
+            const startDateInput = document.getElementById('startDate');
+            const endDateInput = document.getElementById('endDate');
+
+            // Validate dates
+            if (!startDateInput.value || !endDateInput.value) {
+                alert('Please select both start and end dates');
+                return;
+            }
+
+            const startDate = new Date(startDateInput.value);
+            const endDate = new Date(endDateInput.value);
+
+            if (startDate > endDate) {
+                alert('Start date cannot be after end date');
+                return;
+            }
+
+            // Fetch attendance data for the selected range
+            const response = await fetch(`get_attendance.php?user_id=${userId}&start_date=${startDate.toISOString().split('T')[0]}&end_date=${endDate.toISOString().split('T')[0]}`);
+            const attendanceData = await response.json();
+
+            // Calculate total salary
+            let totalSalary = 0;
+            let totalHours = 0;
+            for (const times of Object.values(attendanceData)) {
+                const amTimeIn = times.am.timeIn ? new Date(`2000-01-01T${times.am.timeIn}`) : null;
+                const amTimeOut = times.am.timeOut ? new Date(`2000-01-01T${times.am.timeOut}`) : null;
+                const pmTimeIn = times.pm.timeIn ? new Date(`2000-01-01T${times.pm.timeIn}`) : null;
+                const pmTimeOut = times.pm.timeOut ? new Date(`2000-01-01T${times.pm.timeOut}`) : null;
+
+                const amHours = amTimeIn && amTimeOut ? ((amTimeOut - amTimeIn) / (1000 * 60 * 60)) : 0;
+                const pmHours = pmTimeIn && pmTimeOut ? ((pmTimeOut - pmTimeIn) / (1000 * 60 * 60)) : 0;
+                const dayHours = amHours + pmHours;
+                totalHours += dayHours;
+                totalSalary += dayHours * 15;
+            }
+
+            // Create modal content
+            const modalContent = `
+                <div class="modal fade" id="viewPayrollModal" tabindex="-1" aria-labelledby="viewPayrollModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="viewPayrollModalLabel">Student Assistant Payroll - ${name}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <strong>Employee Name:</strong> ${name}
+                                    </div>
+                                    <div class="col-md-6">
+                                        <strong>Work In:</strong> ${work}
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <strong>Date Range:</strong> ${startDate.toLocaleDateString()} - ${endDate.toLocaleDateString()}
+                                    </div>
+                                    <div class="col-md-6">
+                                        <strong>Rate per Hour:</strong> ₱15.00
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>AM Hours</th>
+                                                <th>PM Hours</th>
+                                                <th>Total Hours</th>
+                                                <th>Daily Salary</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            ${generatePayrollRowsForModal(attendanceData)}
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="3" class="text-end"><strong>Total Hours:</strong></td>
+                                                <td><strong>${totalHours.toFixed(2)}</strong></td>
+                                                <td><strong>₱${totalSalary.toFixed(2)}</strong></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4" class="text-end"><strong>Gross Pay:</strong></td>
+                                                <td><strong>₱${totalSalary.toFixed(2)}</strong></td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-12">
+                                        <div class="alert alert-info">
+                                            <strong>Summary:</strong><br>
+                                            • Total Hours Worked: ${totalHours.toFixed(2)} hours<br>
+                                            • Rate per Hour: ₱15.00<br>
+                                            • Gross Pay: ₱${totalSalary.toFixed(2)}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" onclick="printPayrollModal()">Print</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Remove existing modal if any
+            const existingModal = document.getElementById('viewPayrollModal');
+            if (existingModal) {
+                existingModal.remove();
+            }
+
+            // Add modal to body
+            document.body.insertAdjacentHTML('beforeend', modalContent);
+
+            // Show modal
+            const modal = new bootstrap.Modal(document.getElementById('viewPayrollModal'));
+            modal.show();
+        });
+    });
+
+    // Helper function to generate payroll rows for modal
+    function generatePayrollRowsForModal(attendanceData) {
+        let rows = '';
+
+        for (const [date, times] of Object.entries(attendanceData)) {
+            const dateObj = new Date(date);
+            const formattedDate = dateObj.toLocaleDateString();
+
+            // Calculate hours worked for AM and PM
+            const amTimeIn = times.am.timeIn ? new Date(`2000-01-01T${times.am.timeIn}`) : null;
+            const amTimeOut = times.am.timeOut ? new Date(`2000-01-01T${times.am.timeOut}`) : null;
+            const pmTimeIn = times.pm.timeIn ? new Date(`2000-01-01T${times.pm.timeIn}`) : null;
+            const pmTimeOut = times.pm.timeOut ? new Date(`2000-01-01T${times.pm.timeOut}`) : null;
+
+            const amHours = amTimeIn && amTimeOut ? ((amTimeOut - amTimeIn) / (1000 * 60 * 60)).toFixed(2) : 0;
+            const pmHours = pmTimeIn && pmTimeOut ? ((pmTimeOut - pmTimeIn) / (1000 * 60 * 60)).toFixed(2) : 0;
+            const totalDayHours = (parseFloat(amHours) + parseFloat(pmHours)).toFixed(2);
+            const dailySalary = (parseFloat(totalDayHours) * 15).toFixed(2);
+
+            rows += `
+                <tr>
+                    <td>${formattedDate}</td>
+                    <td>${amHours}</td>
+                    <td>${pmHours}</td>
+                    <td>${totalDayHours}</td>
+                    <td>₱${dailySalary}</td>
+                </tr>
+            `;
+        }
+
+        return rows;
+    }
+
+    // Function to print Payroll modal
+    function printPayrollModal() {
+        const modalContent = document.querySelector('#viewPayrollModal .modal-body').innerHTML;
+        const printWindow = window.open('', '_blank', 'width=800,height=600');
+        printWindow.document.write(`
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Student Assistant Payroll</title>
+                <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+                <style>
+                    @media print {
+                        .no-print { display: none; }
+                    }
+                    body { margin: 20px; }
+                </style>
+            </head>
+            <body>
+                <div class="container">
+                    ${modalContent}
+                </div>
+                <div class="text-center mt-4 no-print">
+                    <button onclick="window.print()" class="btn btn-primary">Print/Save as PDF</button>
+                </div>
+            </body>
+            </html>
+        `);
+        printWindow.document.close();
     }
 </script>
 

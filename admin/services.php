@@ -13,7 +13,26 @@ include('includes/header.php');
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header" style="background-color: #F16E04; color: white;">
-                    <h4>Manpower Services</h4>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4>Manpower Services</h4>
+                        <div class="dropdown">
+                            <select id="serviceFilter" class="form-select" style="background-color: white; color: black; min-width: 200px;">
+                                <option value="">All Services</option>
+                                <?php
+                                // Get all services from work table
+                                $service_query = "SELECT DISTINCT work_name FROM work WHERE type = 'Manpower Services' ORDER BY work_name";
+                                $service_result = mysqli_query($con, $service_query);
+                                
+                                if (mysqli_num_rows($service_result) > 0) {
+                                    while ($service_row = mysqli_fetch_assoc($service_result)) {
+                                        $selected = (isset($_GET['service']) && $_GET['service'] == $service_row['work_name']) ? 'selected' : '';
+                                        echo '<option value="' . htmlspecialchars($service_row['work_name']) . '" ' . $selected . '>' . htmlspecialchars($service_row['work_name']) . '</option>';
+                                    }
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body">
                     <table id="myTable" class="table table-bordered">
@@ -30,13 +49,23 @@ include('includes/header.php');
                         </thead>
                         <tbody>
                             <?php
+                            // Build the query with optional service filter
+                            $service_filter = isset($_GET['service']) && !empty($_GET['service']) ? $_GET['service'] : '';
+                            
                             $query = "
                            SELECT sa.*, w.work_name 
                            FROM student_assistant sa
                            JOIN work w 
                            ON sa.work LIKE CONCAT('%', w.work_name, '%')
-                           WHERE w.type = 'Manpower Services';
-                       ";
+                           WHERE w.type = 'Manpower Services'";
+                           
+                            // Add service filter if selected
+                            if (!empty($service_filter)) {
+                                $query .= " AND w.work_name = '" . mysqli_real_escape_string($con, $service_filter) . "'";
+                            }
+                            
+                            $query .= " ORDER BY sa.last_name, sa.first_name";
+                            
                             $query_run = mysqli_query($con, $query);
 
                             if (mysqli_num_rows($query_run) > 0) {
@@ -69,6 +98,28 @@ include('includes/header.php');
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const serviceFilter = document.getElementById('serviceFilter');
+    
+    serviceFilter.addEventListener('change', function() {
+        const selectedService = this.value;
+        const currentUrl = new URL(window.location.href);
+        
+        if (selectedService === '') {
+            // Remove service parameter if "All Services" is selected
+            currentUrl.searchParams.delete('service');
+        } else {
+            // Set service parameter to selected value
+            currentUrl.searchParams.set('service', selectedService);
+        }
+        
+        // Reload the page with the new URL
+        window.location.href = currentUrl.toString();
+    });
+});
+</script>
 
 <?php
 include('includes/footer.php');

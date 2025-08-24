@@ -13,7 +13,7 @@ if (isset($_GET['token'])) {
     $query_run = mysqli_query($con, $query);
     
     if (mysqli_num_rows($query_run) > 0) {
-        $student = mysqli_fetch_assoc($query_run);
+        $user = mysqli_fetch_assoc($query_run);
         // Show reset password form
         ?>
         <style>
@@ -112,13 +112,14 @@ if (isset($_GET['token'])) {
         <?php
     } else {
         $_SESSION['error'] = "Invalid or expired reset token. Please request a new password reset link.";
-        header('Location: student_forgot_password.php');
+        header('Location: forgot_password.php');
         exit();
     }
 } else {
     $_SESSION['error'] = "No reset token provided.";
-    header('Location: student_forgot_password.php');
+    header('Location: forgot_password.php');
     exit();
 }
 
-include('includes/footer.php'); 
+include('includes/footer.php');
+?>

@@ -52,6 +52,18 @@ include('includes/navbar.php');
                         <h3 class="text-white mb-0 fw-bold"><i class="fas fa-key me-2"></i>FORGOT PASSWORD</h3>
                     </div>
                     <div class="card-body px-lg-5 py-4">
+                        <?php if (isset($_SESSION['message'])): ?>
+                            <div class="alert alert-success">
+                                <?= $_SESSION['message']; unset($_SESSION['message']); ?>
+                            </div>
+                        <?php endif; ?>
+                        
+                        <?php if (isset($_SESSION['error'])): ?>
+                            <div class="alert alert-danger">
+                                <?= $_SESSION['error']; unset($_SESSION['error']); ?>
+                            </div>
+                        <?php endif; ?>
+                        
                         <form action="send_reset_link.php" method="POST" class="needs-validation" novalidate>
                             <div class="mb-4">
                                 <label class="form-label text-secondary">Email Address</label>

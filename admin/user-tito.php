@@ -3,7 +3,7 @@ include('authentication.php');
 include('includes/user-header.php');
 
 $today = date('Y-m-d');
-$query = "SELECT s.id, s.last_name, s.first_name, s.program, s.year, s.work, a.date, a.day, a.time_in, a.time_out, a.status 
+$query = "SELECT s.student_id, s.last_name, s.first_name, s.program, s.year, s.work, a.date, a.day, a.time_in, a.time_out, a.status 
           FROM student_assistant s 
           INNER JOIN attendance a ON s.id = a.sa_id 
           WHERE a.date = '$today'";
@@ -15,18 +15,60 @@ $result = mysqli_query($con, $query);
      <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item active">Attendance</li>
     </ol>
+    
+    <!-- Attendance Navigation Section -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="fas fa-book-open me-2"></i>Attendance Management</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <div class="card border-primary">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-building fa-2x text-primary mb-2"></i>
+                                    <h6>Offices</h6>
+                                    <a href="tito_offices_user.php" class="btn btn-outline-primary btn-sm">View Offices</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="card border-success">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-flask fa-2x text-success mb-2"></i>
+                                    <h6>Laboratory</h6>
+                                    <a href="tito_lab_user.php" class="btn btn-outline-success btn-sm">View Laboratory</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="card border-warning">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-users fa-2x text-warning mb-2"></i>
+                                    <h6>Manpower Services</h6>
+                                    <a href="tito_manpower_user.php" class="btn btn-outline-warning btn-sm">View Manpower</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <div class="row">
-
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">  
-                    <h4>Attendance</h4>
+                    <h4>Today's Attendance</h4>
                 </div>
                 <div class="card-body">
                     <table id="myTable" class="table table-bordered">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>Student ID</th>
                                 <th>Last Name</th>
                                 <th>First Name</th>
                                 <th>Program</th>
@@ -43,7 +85,7 @@ $result = mysqli_query($con, $query);
                             <?php if(mysqli_num_rows($result) > 0): ?>
                                 <?php while($row = mysqli_fetch_assoc($result)): ?>
                                 <tr>
-                                    <td><?php echo htmlspecialchars($row['id']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['student_id']); ?></td>
                                     <td><?php echo htmlspecialchars($row['last_name']); ?></td>
                                     <td><?php echo htmlspecialchars($row['first_name']); ?></td>
                                     <td><?php echo htmlspecialchars($row['program']); ?></td>

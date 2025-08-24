@@ -32,7 +32,7 @@ include('includes/header.php');
                                     <th>Year</th>
                                     <th>Work In</th>
                                     <th>Option</th>
-                                    <th>Condition</th> 
+                                    <th>Status</th> 
                                 </tr>
                             </thead>
                             <tbody>

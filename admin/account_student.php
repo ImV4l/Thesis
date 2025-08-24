@@ -44,28 +44,31 @@ if (isset($_SESSION['message'])) {
                         <tbody>
                             <?php
                             // Modified query to fetch from register_sa table
-                            $query = "SELECT student_id, last_name, first_name, email FROM register_sa";
+                            $query = "SELECT student_id, name, email FROM register_sa";
                             $query_run = mysqli_query($con, $query);
 
                             if (mysqli_num_rows($query_run) > 0) {
                                 foreach ($query_run as $row) {
+                                    $name_parts = explode(' ', $row['name']);
+                                    $first_name = $name_parts[0];
+                                    $last_name = count($name_parts) > 1 ? $name_parts[1] : '';
                             ?>
                                     <tr>
                                         <td><?= $row['student_id']; ?></td>
-                                        <td><?= $row['last_name']; ?></td>
-                                        <td><?= $row['first_name']; ?></td>
+                                        <td><?= $last_name; ?></td>
+                                        <td><?= $first_name; ?></td>
                                         <td><?= $row['email']; ?></td>
                                         <td>
                                             <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#updateModal"
                                                 data-id="<?= $row['student_id']; ?>"
-                                                data-lastname="<?= htmlspecialchars($row['last_name']); ?>"
-                                                data-firstname="<?= htmlspecialchars($row['first_name']); ?>"
+                                                data-lastname="<?= htmlspecialchars($last_name); ?>"
+                                                data-firstname="<?= htmlspecialchars($first_name); ?>"
                                                 data-email="<?= htmlspecialchars($row['email']); ?>">
                                                 Update
                                             </button>
                                             <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal"
                                                 data-id="<?= $row['student_id']; ?>"
-                                                data-name="<?= htmlspecialchars($row['last_name'] . ', ' . $row['first_name']); ?>">
+                                                data-name="<?= htmlspecialchars($row['name']); ?>">
                                                 Delete
                                             </button>
                                         </td>

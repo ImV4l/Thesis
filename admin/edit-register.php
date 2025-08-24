@@ -282,6 +282,9 @@ include('includes/header.php');
                                 <div class="col-md-4">
                                     <input name="cn6" value="<?= $user['cn6']; ?>" class="form-control">
                                 </div>
+                                <div class="col-12">
+                                    <button type="submit" name="update_reference" class="btn btn-primary">Update Reference Information</button>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -315,6 +318,9 @@ include('includes/header.php');
                                 <div class="col-md-4">
                                     <label class="form-label">Approx. Income/Mon</label>
                                     <input name="mothers_income" value="<?= $user['mothers_income']; ?>" class="form-control">
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" name="update_family" class="btn btn-primary">Update Family Information</button>
                                 </div>
                             </form>
                         </div>

@@ -17,13 +17,11 @@
                 <i class="fas fa-user fa-fw"></i> User
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                <li><button type="button" name="update_btn" class="dropdown-item">Update</button></li>
+                <li><hr class="dropdown-divider"></li>
                 <li>
                     <form action="../allcode.php" method="POST" style="margin: 0;">
-                        <button type="button" name="update_btn" class="dropdown-item">Update</button>
-                        <hr class="dropdown-divider">
                         <button type="submit" name="logout_btn" class="dropdown-item">Logout</button>
-
-
                     </form>
                 </li>
             </ul>

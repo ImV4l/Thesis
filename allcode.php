@@ -9,6 +9,6 @@ if (isset($_POST['logout_btn'])) {
 
     // $_SESSION['message'] = "Logged out Successfully";
 
-    header("Location: index.php");
+    header("Location: login.php");
     exit(0);
 }

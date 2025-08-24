@@ -13,7 +13,26 @@ include('includes/header.php');
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header" style="background-color: #F16E04; color: white;">
-                    <h4>Laboratories</h4>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4>Laboratories</h4>
+                        <div class="dropdown">
+                            <select id="laboratoryFilter" class="form-select" style="background-color: white; color: black; min-width: 200px;">
+                                <option value="">All Laboratories</option>
+                                <?php
+                                // Get all laboratories from work table
+                                $lab_query = "SELECT DISTINCT work_name FROM work WHERE type = 'Laboratory' ORDER BY work_name";
+                                $lab_result = mysqli_query($con, $lab_query);
+                                
+                                if (mysqli_num_rows($lab_result) > 0) {
+                                    while ($lab_row = mysqli_fetch_assoc($lab_result)) {
+                                        $selected = (isset($_GET['laboratory']) && $_GET['laboratory'] == $lab_row['work_name']) ? 'selected' : '';
+                                        echo '<option value="' . htmlspecialchars($lab_row['work_name']) . '" ' . $selected . '>' . htmlspecialchars($lab_row['work_name']) . '</option>';
+                                    }
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body">
                     <table id="myTable" class="table table-bordered">
@@ -30,13 +49,23 @@ include('includes/header.php');
                         </thead>
                         <tbody>
                             <?php
+                            // Build the query with optional laboratory filter
+                            $lab_filter = isset($_GET['laboratory']) && !empty($_GET['laboratory']) ? $_GET['laboratory'] : '';
+                            
                             $query = "
                            SELECT sa.*, w.work_name 
                            FROM student_assistant sa
                            JOIN work w 
                            ON sa.work LIKE CONCAT('%', w.work_name, '%')
-                           WHERE w.type = 'Laboratory';
-                       ";
+                           WHERE w.type = 'Laboratory'";
+                           
+                            // Add laboratory filter if selected
+                            if (!empty($lab_filter)) {
+                                $query .= " AND w.work_name = '" . mysqli_real_escape_string($con, $lab_filter) . "'";
+                            }
+                            
+                            $query .= " ORDER BY sa.last_name, sa.first_name";
+                            
                             $query_run = mysqli_query($con, $query);
 
                             if (mysqli_num_rows($query_run) > 0) {
@@ -69,6 +98,28 @@ include('includes/header.php');
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const laboratoryFilter = document.getElementById('laboratoryFilter');
+    
+    laboratoryFilter.addEventListener('change', function() {
+        const selectedLaboratory = this.value;
+        const currentUrl = new URL(window.location.href);
+        
+        if (selectedLaboratory === '') {
+            // Remove laboratory parameter if "All Laboratories" is selected
+            currentUrl.searchParams.delete('laboratory');
+        } else {
+            // Set laboratory parameter to selected value
+            currentUrl.searchParams.set('laboratory', selectedLaboratory);
+        }
+        
+        // Reload the page with the new URL
+        window.location.href = currentUrl.toString();
+    });
+});
+</script>
 
 <?php
 include('includes/footer.php');

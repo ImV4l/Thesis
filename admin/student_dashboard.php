@@ -257,7 +257,7 @@ $profile_picture = $student['image'] ? '../uploads/profiles/' . $student['image'
                     <div class="card-body student-body">
                         <div class="row">
                             <!-- Left Column -->
-                            <div class="col-md-6 compact-info">
+                            <div class="col-md-12 compact-info">
                                 <!-- Personal Information Header -->
                                 <div class="mb-3">
                                     <div class="references-header">
@@ -392,53 +392,8 @@ $profile_picture = $student['image'] ? '../uploads/profiles/' . $student['image'
 
 
                             <!-- Right Column -->
-                            <div class="col-md-6 compact-right">
+                            <div class="col-md-12 compact-right">
 
-                                <!-- References Section -->
-                                <div class="mb-3">
-                                    <div class="references-header">
-                                        <h5 class="mb-0">References</h5>
-                                    </div>
-                                    <div>
-                                        <!-- Outside WIT References -->
-                                        <h6 class="mb-2">Outside WIT</h6>
-                                        <?php
-                                        // Display outside WIT references
-                                        for ($i = 1; $i <= 3; $i++) {
-                                            $name = $student["out_name$i"] ?? '';
-                                            $company = $student["comp_add$i"] ?? '';
-                                            $contact = $student["cn$i"] ?? '';
-
-                                            if ($name || $company || $contact) {
-                                                echo '<div class="row mb-1">';
-                                                echo '<div class="col-md-4"><div class="info-item"><div class="info-label">Name</div><div class="info-value">' . htmlspecialchars($name) . '</div></div></div>';
-                                                echo '<div class="col-md-4"><div class="info-item"><div class="info-label">Company/Address</div><div class="info-value">' . htmlspecialchars($company) . '</div></div></div>';
-                                                echo '<div class="col-md-4"><div class="info-item"><div class="info-label">Contact No.</div><div class="info-value">' . htmlspecialchars($contact) . '</div></div></div>';
-                                                echo '</div>';
-                                            }
-                                        }
-                                        ?>
-
-                                        <!-- From WIT References -->
-                                        <h6 class="mb-2">From WIT</h6>
-                                        <?php
-                                        // Display from WIT references
-                                        for ($i = 1; $i <= 3; $i++) {
-                                            $name = $student["from_wit$i"] ?? '';
-                                            $company = $student["comp_add" . ($i + 3)] ?? '';
-                                            $contact = $student["cn" . ($i + 3)] ?? '';
-
-                                            if ($name || $company || $contact) {
-                                                echo '<div class="row mb-1">';
-                                                echo '<div class="col-md-4"><div class="info-item"><div class="info-label">Name</div><div class="info-value">' . htmlspecialchars($name) . '</div></div></div>';
-                                                echo '<div class="col-md-4"><div class="info-item"><div class="info-label">Company/Address</div><div class="info-value">' . htmlspecialchars($company) . '</div></div></div>';
-                                                echo '<div class="col-md-4"><div class="info-item"><div class="info-label">Contact No.</div><div class="info-value">' . htmlspecialchars($contact) . '</div></div></div>';
-                                                echo '</div>';
-                                            }
-                                        }
-                                        ?>
-                                    </div>
-                                </div>
 
                                 <!-- Family Information Section -->
                                 <div class="mb-3">
@@ -504,69 +459,12 @@ $profile_picture = $student['image'] ? '../uploads/profiles/' . $student['image'
                             </div>
                         </div>
 
-                        <!-- Add Daily Time Record Section -->
-                        <div class="card mt-4">
-                            <div class="card-header references-header">
-                                <h5 class="mb-0 text-white">Daily Time Record
-                                    <div class="float-end">
-                                        <div class="d-flex align-items-center" style="max-width: 500px;">
-                                            <div class="input-group input-group-sm">
-                                                <input type="date" id="startDate" class="form-control">
-                                                <span class="input-group-text">to</span>
-                                                <input type="date" id="endDate" class="form-control">
-                                                <button class="btn btn-primary" onclick="filterAttendance()">
-                                                    <i class="fa fa-filter"></i> Filter
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </h5>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive" id="attendanceTable">
-                                    <!-- Table content will be loaded here via AJAX -->
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<script>
-    function filterAttendance() {
-        const startDate = document.getElementById('startDate').value;
-        const endDate = document.getElementById('endDate').value;
-
-        if (!startDate || !endDate) {
-            alert('Please select both start and end dates');
-            return;
-        }
-
-        fetch(`student_dtr.php?start_date=${startDate}&end_date=${endDate}`)
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('attendanceTable').innerHTML = data;
-            })
-            .catch(error => console.error('Error:', error));
-    }
-
-    // Initialize date pickers with default range (current month)
-    document.addEventListener('DOMContentLoaded', function() {
-        const currentDate = new Date();
-        const startDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
-        const endDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
-
-        document.getElementById('startDate').value = startDate.toISOString().split('T')[0];
-        document.getElementById('endDate').value = endDate.toISOString().split('T')[0];
-
-        // Load initial data
-        filterAttendance();
-    });
-</script>
 
 <?php
 include('includes/footer.php');

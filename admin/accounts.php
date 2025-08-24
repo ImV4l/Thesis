@@ -19,8 +19,8 @@ include('includes/header.php');
                 <div class="card-body">
                     <i class="fas fa-user"></i> Users Accounts
                     <?php
-                    // Query to count registered users in admin table
-                    $user_query = "SELECT COUNT(*) as user_total FROM admin WHERE role_as='0'";
+                    // Query to count registered users in admin table (excluding deleted accounts)
+                    $user_query = "SELECT COUNT(*) as user_total FROM admin WHERE role_as='0' AND status!='2'";
                     $user_query_run = mysqli_query($con, $user_query);
 
                     if ($user_total = mysqli_fetch_assoc($user_query_run)) {
