@@ -10,10 +10,19 @@ if (isset($_GET['work'])) {
   $work_filter = mysqli_real_escape_string($con, $_GET['work']);
 }
 
+$date_filter = '';
+if (isset($_GET['date'])) {
+  $date_filter = mysqli_real_escape_string($con, $_GET['date']);
+}
+
 $query = "SELECT s.id, s.first_name, s.last_name, s.work, a.id AS attid, a.date, a.day, a.time_in, a.time_out, a.status 
           FROM student_assistant s 
           LEFT JOIN attendance a ON a.sa_id = s.id 
           WHERE s.work LIKE '%$work_filter%'";
+          
+if (!empty($date_filter)) {
+  $query .= " AND a.date = '$date_filter'";
+}
 
 $result = mysqli_query($con, $query);
 ?>
@@ -31,8 +40,22 @@ $result = mysqli_query($con, $query);
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
-          <h4>Student Attendance Records
-          </h4>
+          <div class="row align-items-center">
+            <div class="col-md-6">
+              <h4>Student Attendance Records</h4>
+            </div>
+            <div class="col-md-6">
+              <div class="d-flex justify-content-end">
+                <div class="input-group" style="max-width: 250px;">
+                  <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                  <input type="date" class="form-control" id="dateFilter" value="<?php echo htmlspecialchars($date_filter); ?>" onchange="filterByDate()">
+                  <button class="btn btn-outline-secondary" type="button" onclick="clearDateFilter()" title="Clear Date Filter">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="card-body">
           <div class="table-responsive">
@@ -146,6 +169,27 @@ $result = mysqli_query($con, $query);
 </div>
 
 <script>
+  // Date filter functions
+  function filterByDate() {
+    const selectedDate = document.getElementById('dateFilter').value;
+    const currentUrl = new URL(window.location);
+    
+    if (selectedDate) {
+      currentUrl.searchParams.set('date', selectedDate);
+    } else {
+      currentUrl.searchParams.delete('date');
+    }
+    
+    window.location.href = currentUrl.toString();
+  }
+  
+  function clearDateFilter() {
+    document.getElementById('dateFilter').value = '';
+    const currentUrl = new URL(window.location);
+    currentUrl.searchParams.delete('date');
+    window.location.href = currentUrl.toString();
+  }
+
   document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.edit').forEach(button => {
       button.addEventListener('click', function() {

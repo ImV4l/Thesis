@@ -18,97 +18,59 @@ $selected_day = $date_parts[2];
 ?>
 
 
-<div class="container-fluid px-4">
-    <h6></h6>
-    <div class="card">
-        <div class="card-header" style="background-color: #F16E04; color: white;">
-            <div class="d-flex justify-content-between align-items-center">
-                <h4 class="m-0">Daily Attendance Report</h4>
-                <!-- Date Picker -->
-                <form method="GET" action="report.php" class="d-flex align-items-center gap-2">
-                    <label for="date" class="me-2 mb-0">Select Date:</label>
-                    <input type="date" name="date" id="date" class="form-control" style="width: auto;" value="<?= $selected_date ?>" min="2020-01-01" max="<?= date('Y-m-d', strtotime('+1 year')) ?>">
-                    <button type="submit" class="btn btn-light btn-sm">View Report</button>
-                </form>
-            </div>
-        </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-12">
-                    <h5 class="mb-3">Attendance Report for <?= date('F j, Y', strtotime($selected_date)) ?></h5>
-                    
-                    <?php
-                    // Query to get attendance data for the selected date
-                    $query = "SELECT 
-                                sa.first_name, 
-                                sa.last_name, 
-                                a.time_in, 
-                                a.time_out,
-                                TIMESTAMPDIFF(MINUTE, a.time_in, a.time_out) / 60.0 AS work_hours
-                              FROM attendance a
-                              JOIN student_assistant sa ON a.sa_id = sa.id
-                              WHERE DATE(a.date) = '$selected_date'
-                              ORDER BY a.time_in";
-                    
-                    $result = mysqli_query($con, $query);
-                    
-                    if ($result && mysqli_num_rows($result) > 0) {
-                        echo '<div class="table-responsive">';
-                        echo '<table class="table table-striped table-hover">';
-                        echo '<thead class="table-dark">';
-                        echo '<tr>';
-                        echo '<th>Employee Name</th>';
-                        echo '<th>Time In</th>';
-                        echo '<th>Time Out</th>';
-                        echo '<th>Work Hours</th>';
-                        echo '</tr>';
-                        echo '</thead>';
-                        echo '<tbody>';
-                        
-                        $total_hours = 0;
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            $work_hours = $row['work_hours'] ?? 0;
-                            $total_hours += $work_hours;
-                            
-                            echo '<tr>';
-                            echo '<td>' . htmlspecialchars($row['first_name'] . ' ' . $row['last_name']) . '</td>';
-                            echo '<td>' . ($row['time_in'] ? date('h:i A', strtotime($row['time_in'])) : 'N/A') . '</td>';
-                            echo '<td>' . ($row['time_out'] ? date('h:i A', strtotime($row['time_out'])) : 'N/A') . '</td>';
-                            echo '<td>' . number_format($work_hours, 2) . ' hours</td>';
-                            echo '</tr>';
-                        }
-                        
-                        echo '</tbody>';
-                        echo '</table>';
-                        echo '</div>';
-                        
-                        // Summary card
-                        echo '<div class="row mt-4">';
-                        echo '<div class="col-md-4">';
-                        echo '<div class="card bg-success text-white">';
-                        echo '<div class="card-body">';
-                        echo '<h5>Total Work Hours</h5>';
-                        echo '<h3>' . number_format($total_hours, 2) . ' hours</h3>';
-                        echo '</div>';
-                        echo '</div>';
-                        echo '</div>';
-                        echo '<div class="col-md-4">';
-                        echo '<div class="card bg-info text-white">';
-                        echo '<div class="card-body">';
-                        echo '<h5>Total Employees</h5>';
-                        echo '<h3>' . mysqli_num_rows($result) . '</h3>';
-                        echo '</div>';
-                        echo '</div>';
-                        echo '</div>';
-                        echo '</div>';
-                        
-                    } else {
-                        echo '<div class="alert alert-info" role="alert">';
-                        echo '<h5>No Attendance Data</h5>';
-                        echo '<p>No attendance records found for ' . date('F j, Y', strtotime($selected_date)) . '</p>';
-                        echo '</div>';
-                    }
-                    ?>
+<div class="container-fluid px-4"><div class="container-fluid px-4">
+    <h4></h4>
+    <ol class="breadcrumb mb-4">
+        
+    </ol>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header" style="background-color: #F16E04; color: white;">
+                    <h4>Student </h4>
+                </div>
+                <div class="card-body">
+                    <table id="myTable" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Student ID</th>
+                                <th>Last Name</th>
+                                <th>First Name</th>
+                                <th>Work In</th>
+                                <th>Option</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $query = "SELECT student_id, last_name, first_name, work FROM student_assistant WHERE status = '0'";
+                            $query_run = mysqli_query($con, $query);
+
+                            if (mysqli_num_rows($query_run) > 0) {
+                                foreach ($query_run as $row) {
+                            ?>
+                                    <tr>
+                                        <td><?= $row['student_id']; ?></td>
+                                        <td><?= $row['last_name']; ?></td>
+                                        <td><?= $row['first_name']; ?></td>
+                                        <td><?= $row['work']; ?></td>
+                                        <td>
+                                            <a href="student_dtr.php?student_id=<?= $row['student_id']; ?>" class="btn btn-info btn-sm">
+                                                View DTR
+                                            </a>
+                                        </td>
+                                    </tr>
+                                <?php
+                                }
+                            } else {
+                                ?>
+                                <tr>
+                                    <td colspan="5">No Record Found</td>
+                                </tr>
+                            <?php
+                            }
+                            ?>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

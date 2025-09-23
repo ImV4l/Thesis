@@ -97,10 +97,10 @@ include('includes/header.php');
             <div class="card mb-4">
                 <div class="card-header">
                     <i class="fas fa-chart-area me-1"></i>
-                    Attendance Chart
+                    Daily Attendance Chart
                 </div>
                 <div class="card-body" style="height: 500px;">
-                    <canvas id="workHoursChart" width="100%" height="100%"></canvas>
+                    <canvas id="attendanceChart" width="100%" height="100%"></canvas>
                 </div>
             </div>
         </div>
@@ -112,19 +112,19 @@ include('includes/header.php');
 
 <script>
     // Fetch data for the chart
-    fetch('get_daily_work_hours.php')
+    fetch('get_daily_attendance.php')
         .then(response => response.json())
         .then(data => {
-            const ctx = document.getElementById('workHoursChart').getContext('2d');
+            const ctx = document.getElementById('attendanceChart').getContext('2d');
             new Chart(ctx, {
                 type: 'bar',
                 data: {
                     labels: data.dates,
                     datasets: [{
-                        label: 'Total Work Hours',
-                        data: data.hours,
-                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                        borderColor: 'rgba(54, 162, 235, 1)',
+                        label: 'Daily Attendance',
+                        data: data.attendance,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
                         borderWidth: 1
                     }]
                 },
@@ -136,7 +136,7 @@ include('includes/header.php');
                             beginAtZero: true,
                             title: {
                                 display: true,
-                                text: 'Hours'
+                                text: 'Number of Students'
                             },
                             ticks: {
                                 stepSize: 1
