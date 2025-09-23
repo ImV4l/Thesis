@@ -6,7 +6,7 @@
 // WiFi credentials
 const char* ssid = "No Internet";
 const char* password = "Pldtnitoto16!";
-const char* serverUrl = "http://192.168.1.6/sa_management_system/fingerprint.php"; // Pc ip address with xampp
+const char* serverUrl = "http://192.168.1.8/Thesis/fingerprint.php"; // Pc ip address with xampp
 
 // DY50 uses Hardware Serial2 (pins 16,17 on ESP32)
 Adafruit_Fingerprint finger = Adafruit_Fingerprint(&Serial2);
@@ -27,7 +27,7 @@ bool isCapturing = false;
 
 // Add global variable to track last used ID
 uint16_t lastUsedId = 0;
-
+    
 void checkPinConnection() {
   Serial.println("\nChecking pin connections...");
   

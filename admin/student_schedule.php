@@ -212,7 +212,12 @@ if (isset($_SESSION['status'])) {
                 <h5 class="modal-title" id="viewScheduleModalLabel">
                     <i class="fas fa-calendar-alt me-2"></i>Student Weekly Schedule
                 </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="d-flex align-items-center gap-2">
+                    <button type="button" class="btn btn-light btn-sm" id="toggleEditSchedule">
+                        <i class="fas fa-edit me-1"></i>Edit
+                    </button>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
             </div>
             <div class="modal-body">
                 <div class="row mb-4">
@@ -368,8 +373,11 @@ if (isset($_SESSION['status'])) {
         const calendarWeek = document.querySelector('.calendar-week');
         const scheduleSummary = document.getElementById('scheduleSummary');
         const noScheduleMessage = document.getElementById('noScheduleMessage');
+        const toggleEditScheduleBtn = document.getElementById('toggleEditSchedule');
         let currentDate = new Date();
         let currentScheduleData = [];
+        let currentStudentId = null;
+        let editMode = false;
 
         // Handle View Schedule button clicks
         document.querySelectorAll('.view-schedule-btn').forEach(button => {
@@ -382,6 +390,7 @@ if (isset($_SESSION['status'])) {
                 document.getElementById('viewStudentName').textContent = studentName;
                 document.getElementById('viewStudentId').textContent = studentId;
                 document.getElementById('viewWorkIn').textContent = workIn;
+                currentStudentId = studentId;
 
                 try {
                     // Fetch schedule data
@@ -391,7 +400,7 @@ if (isset($_SESSION['status'])) {
                     if (currentScheduleData.length > 0) {
                         // Show schedule
                         renderScheduleSummary(currentScheduleData);
-                        renderCalendar(currentDate, currentScheduleData);
+                        renderCalendar(currentDate, currentScheduleData, editMode);
                         scheduleSummary.style.display = 'block';
                         document.querySelector('.calendar-container').style.display = 'block';
                         noScheduleMessage.style.display = 'none';
@@ -406,6 +415,17 @@ if (isset($_SESSION['status'])) {
                     noScheduleMessage.style.display = 'block';
                 }
             });
+        });
+
+        // Toggle Edit Mode
+        toggleEditScheduleBtn.addEventListener('click', function() {
+            editMode = !editMode;
+            this.classList.toggle('btn-light', !editMode);
+            this.classList.toggle('btn-warning', editMode);
+            this.innerHTML = editMode
+                ? '<i class="fas fa-check me-1"></i>Done'
+                : '<i class="fas fa-edit me-1"></i>Edit';
+            renderCalendar(currentDate, currentScheduleData, editMode);
         });
 
         function renderScheduleSummary(scheduleData) {
@@ -444,7 +464,7 @@ if (isset($_SESSION['status'])) {
                             <div class="card-body text-center">
                                 <i class="fas fa-chart-line fa-2x mb-2"></i>
                                 <h5>Avg Hours/Day</h5>
-                                <h3>${(totalHours / scheduledDays).toFixed(1)}</h3>
+                                <h3>${scheduledDays > 0 ? (totalHours / scheduledDays).toFixed(1) : '0.0'}</h3>
                             </div>
                         </div>
                     </div>
@@ -452,7 +472,7 @@ if (isset($_SESSION['status'])) {
             `;
         }
 
-        function renderCalendar(date, scheduleData = []) {
+        function renderCalendar(date, scheduleData = [], isEditMode = false) {
             const startOfWeek = new Date(date);
             startOfWeek.setDate(date.getDate() - date.getDay());
 
@@ -510,10 +530,24 @@ if (isset($_SESSION['status'])) {
                         const timeOutDate = new Date(`2000-01-01 ${schedule.time_out}`);
                         const duration = (timeOutDate - timeInDate) / (1000 * 60 * 60);
 
-                        scheduleItem.innerHTML = `
-                            <div><i class="fas fa-clock me-1"></i>${timeIn} - ${timeOut}</div>
+                        scheduleItem.setAttribute('data-schedule-id', schedule.id);
+                        scheduleItem.setAttribute('data-weekday', schedule.weekday);
+                        scheduleItem.setAttribute('data-time-in', schedule.time_in);
+                        scheduleItem.setAttribute('data-time-out', schedule.time_out);
+
+                        let inner = `
+                            <div><i class=\"fas fa-clock me-1\"></i>${timeIn} - ${timeOut}</div>
                             <small>(${duration.toFixed(1)} hours)</small>
                         `;
+                        if (isEditMode) {
+                            inner += `
+                                <div class=\"mt-2\">
+                                    <button class=\"btn btn-sm btn-warning schedule-edit me-2\" data-id=\"${schedule.id}\"><i class=\"fas fa-pen\"></i></button>
+                                    <button class=\"btn btn-sm btn-danger schedule-delete\" data-id=\"${schedule.id}\"><i class=\"fas fa-trash\"></i></button>
+                                </div>
+                            `;
+                        }
+                        scheduleItem.innerHTML = inner;
                         dayElement.appendChild(scheduleItem);
                     });
                 } else {
@@ -529,6 +563,108 @@ if (isset($_SESSION['status'])) {
                 calendarWeek.appendChild(dayElement);
             }
         }
+
+        // Event delegation for edit/delete within calendar
+        calendarWeek.addEventListener('click', function(e) {
+            const editBtn = e.target.closest('.schedule-edit');
+            const deleteBtn = e.target.closest('.schedule-delete');
+            if (editBtn) {
+                const scheduleId = editBtn.getAttribute('data-id');
+                const container = editBtn.closest('.schedule-item');
+                const weekday = container.getAttribute('data-weekday');
+                const timeIn = container.getAttribute('data-time-in');
+                const timeOut = container.getAttribute('data-time-out');
+
+                const weekdays = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+                const selectOptions = weekdays.map(d => `<option value="${d}" ${d===weekday?'selected':''}>${d}</option>`).join('');
+
+                container.innerHTML = `
+                    <div class=\"p-2 bg-light text-dark rounded\">
+                        <div class=\"mb-2\">
+                            <select class=\"form-select form-select-sm edit-weekday\">${selectOptions}</select>
+                        </div>
+                        <div class=\"d-flex gap-2 mb-2\">
+                            <input type=\"time\" class=\"form-control form-control-sm edit-time-in\" value=\"${timeIn}\">
+                            <input type=\"time\" class=\"form-control form-control-sm edit-time-out\" value=\"${timeOut}\">
+                        </div>
+                        <div class=\"d-flex justify-content-end gap-2\">
+                            <button class=\"btn btn-sm btn-secondary edit-cancel\">Cancel</button>
+                            <button class=\"btn btn-sm btn-success edit-save\" data-id=\"${scheduleId}\">Save</button>
+                        </div>
+                        <div class=\"text-danger small mt-1 validation-error\" style=\"display:none;\">Time Out must be later than Time In</div>
+                    </div>
+                `;
+            } else if (deleteBtn) {
+                const scheduleId = deleteBtn.getAttribute('data-id');
+                if (!confirm('Delete this schedule entry?')) return;
+                fetch('code.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams({
+                        delete_schedule: '1',
+                        schedule_id: scheduleId,
+                        student_id: currentStudentId
+                    })
+                }).then(r => r.json()).then(async res => {
+                    if (res.success) {
+                        const response = await fetch(`get_schedule.php?student_id=${currentStudentId}`);
+                        currentScheduleData = await response.json();
+                        renderScheduleSummary(currentScheduleData);
+                        renderCalendar(currentDate, currentScheduleData, editMode);
+                    } else {
+                        alert('Failed to delete: ' + (res.error || 'Unknown error'));
+                    }
+                }).catch(() => alert('Network error while deleting schedule'));
+            }
+        });
+
+        // Event delegation for save/cancel in inline editor
+        calendarWeek.addEventListener('click', function(e) {
+            const saveBtn = e.target.closest('.edit-save');
+            const cancelBtn = e.target.closest('.edit-cancel');
+            if (cancelBtn) {
+                // Re-render to discard edits
+                renderCalendar(currentDate, currentScheduleData, editMode);
+                return;
+            }
+            if (saveBtn) {
+                const container = saveBtn.closest('.schedule-item');
+                const scheduleId = saveBtn.getAttribute('data-id');
+                const weekday = container.querySelector('.edit-weekday').value;
+                const timeIn = container.querySelector('.edit-time-in').value;
+                const timeOut = container.querySelector('.edit-time-out').value;
+                const errorEl = container.querySelector('.validation-error');
+                // validate
+                if (timeIn && timeOut && timeOut <= timeIn) {
+                    errorEl.style.display = 'block';
+                    return;
+                } else {
+                    errorEl.style.display = 'none';
+                }
+                const payload = new URLSearchParams({
+                    update_schedule: '1',
+                    schedule_id: scheduleId,
+                    student_id: currentStudentId,
+                    weekday: weekday,
+                    time_in: timeIn,
+                    time_out: timeOut
+                });
+                fetch('code.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: payload
+                }).then(r => r.json()).then(async res => {
+                    if (res.success) {
+                        const response = await fetch(`get_schedule.php?student_id=${currentStudentId}`);
+                        currentScheduleData = await response.json();
+                        renderScheduleSummary(currentScheduleData);
+                        renderCalendar(currentDate, currentScheduleData, editMode);
+                    } else {
+                        alert('Failed to update: ' + (res.error || 'Unknown error'));
+                    }
+                }).catch(() => alert('Network error while updating schedule'));
+            }
+        });
     });
 </script>
 

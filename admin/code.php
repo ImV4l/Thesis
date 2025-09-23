@@ -257,6 +257,47 @@ if (isset($_POST['add_schedule'])) {
     exit();
 }
 
+// Update a schedule entry (AJAX-friendly)
+if (isset($_POST['update_schedule'])) {
+    $schedule_id = mysqli_real_escape_string($con, $_POST['schedule_id']);
+    $student_id = isset($_POST['student_id']) ? mysqli_real_escape_string($con, $_POST['student_id']) : null;
+    $weekday = mysqli_real_escape_string($con, $_POST['weekday']);
+    $time_in = mysqli_real_escape_string($con, $_POST['time_in']);
+    $time_out = mysqli_real_escape_string($con, $_POST['time_out']);
+
+    $where_student = $student_id ? " AND student_id = '$student_id'" : "";
+    $query = "UPDATE schedules SET weekday='$weekday', time_in='$time_in', time_out='$time_out' WHERE id='$schedule_id'" . $where_student . " LIMIT 1";
+
+    $ok = mysqli_query($con, $query);
+    header('Content-Type: application/json');
+    if ($ok) {
+        echo json_encode([ 'success' => true ]);
+    } else {
+        http_response_code(500);
+        echo json_encode([ 'success' => false, 'error' => mysqli_error($con) ]);
+    }
+    exit();
+}
+
+// Delete a schedule entry (AJAX-friendly)
+if (isset($_POST['delete_schedule'])) {
+    $schedule_id = mysqli_real_escape_string($con, $_POST['schedule_id']);
+    $student_id = isset($_POST['student_id']) ? mysqli_real_escape_string($con, $_POST['student_id']) : null;
+
+    $where_student = $student_id ? " AND student_id = '$student_id'" : "";
+    $query = "DELETE FROM schedules WHERE id='$schedule_id'" . $where_student . " LIMIT 1";
+
+    $ok = mysqli_query($con, $query);
+    header('Content-Type: application/json');
+    if ($ok) {
+        echo json_encode([ 'success' => true ]);
+    } else {
+        http_response_code(500);
+        echo json_encode([ 'success' => false, 'error' => mysqli_error($con) ]);
+    }
+    exit();
+}
+
 if (isset($_POST['update_reference'])) {
     $user_id = $_POST['user_id'];
     $out_name1 = mysqli_real_escape_string($con, $_POST['out_name1']);
