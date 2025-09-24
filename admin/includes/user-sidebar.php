@@ -7,7 +7,7 @@
                 <div class="sb-sidenav-menu-heading">Manage</div>
 
 
-                <a class="nav-link" >
+                <a class="nav-link" href="user-tito.php" >
                     <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                     Attendance
                 </a>

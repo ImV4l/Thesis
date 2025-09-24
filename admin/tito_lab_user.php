@@ -24,7 +24,7 @@ $i = 0;
             <h1 class="mt-4">Laboratory Attendance</h1>
             <ol class="breadcrumb mb-4">
                 <li class="breadcrumb-item"><a href="user-tito.php">Attendance</a></li>
-                <li class="breadcrumb-item active">Laboratory</li>
+                <li class="breadcrumb-item active">Laboratories</li>
             </ol>
             
             <div class="row">
@@ -46,7 +46,7 @@ $i = 0;
                                     </div>
                                 </div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="attendance_detail.php?work=<?php echo urlencode($row['work_name']); ?>">
+                                    <a class="small text-white stretched-link" href="attendance_detail_user.php?work=<?php echo urlencode($row['work_name']); ?>">
                                         View Details
                                     </a>
                                     <div class="small text-white">
