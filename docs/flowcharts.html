@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>System Flowcharts</title>
+    <style>
+        body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", Helvetica, sans-serif; margin: 24px; background: #f7f7fb; color: #222; }
+        h1 { margin: 0 0 8px; }
+        .subtitle { color: #666; margin: 0 0 24px; }
+        section { background: #fff; border: 1px solid #e8e8ef; border-radius: 10px; padding: 16px; margin-bottom: 20px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
+        h2 { margin: 6px 0 14px; font-size: 18px; }
+        .mermaid { background: #fafafe; border: 1px solid #eee; border-radius: 8px; padding: 8px; }
+        .small { font-size: 12px; color: #777; }
+        a { color: #0d6efd; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+    </style>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true, theme: 'default', securityLevel: 'antiscript' });
+    </script>
+    <script nomodule src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script nomodule>
+        if (window.mermaid) { window.mermaid.initialize({ startOnLoad: true, theme: 'default', securityLevel: 'antiscript' }); }
+    </script>
+</head>
+<body>
+    <h1>System Flowcharts</h1>
+    <p class="subtitle">Visual overview of core application flows. The source is in <a href="flowcharts.md">flowcharts.md</a>.</p>
+
+    <section>
+        <h2>Admin Authentication Flow</h2>
+        <div class="mermaid">
+flowchart TD
+    A[login.php (Admin Tab)\nForm POST login_btn] --> B[logincode.php]
+    B -->|Query admin table\nusername & password| C{Match Found?}
+    C -- No --> D[Redirect login.php\n?error_msg]
+    C -- Yes --> E[Set $_SESSION[auth], auth_role, auth_user]
+    E --> F{auth_role}
+    F -- '1' (Admin) --> G[Redirect admin/index.php]
+    F -- '0' (User) --> H[Redirect admin/user-tito.php]
+        </div>
+        <p class="small">Files: <code>login.php</code>, <code>logincode.php</code></p>
+    </section>
+
+    <section>
+        <h2>Student Login Flow</h2>
+        <div class="mermaid">
+flowchart TD
+    A[login.php (Student Tab)\nForm POST student_login_btn] --> B[studentlogincode.php]
+    B -->|SELECT register_sa LEFT JOIN student_assistant| C{Student Found?}
+    C -- No --> D[Redirect login.php\n?error_msg]
+    C -- Yes --> E[Set $_SESSION for student]
+    E --> F[Redirect admin/student_dashboard.php]
+        </div>
+        <p class="small">Files: <code>login.php</code>, <code>studentlogincode.php</code>, <code>admin/student_dashboard.php</code></p>
+    </section>
+
+    <section>
+        <h2>Student Password Reset Flow</h2>
+        <div class="mermaid">
+flowchart TD
+    A[student_forgot_password.php\nForm POST student_send_reset_link_btn] --> B[student_send_reset_link.php]
+    B -->|Verify student_id + email| C{Valid?}
+    C -- No --> D[Redirect back with error]
+    C -- Yes --> E[Generate token + expiry\nUPDATE register_sa]
+    E --> F[Send email via PHPMailer\nreset link with token]
+    F --> G[student_reset_password.php?token]
+    G -->|Form POST new password| H[process_reset_password.php]
+    H -->|Validate token not expired| I{Valid?}
+    I -- No --> J[Redirect to student_forgot_password.php\nwith error]
+    I -- Yes --> K[Hash password\nUPDATE register_sa\nclear token]
+    K --> L[Redirect login.php\nwith success]
+        </div>
+        <p class="small">Files: <code>student_forgot_password.php</code>, <code>student_send_reset_link.php</code>, <code>student_reset_password.php</code>, <code>process_reset_password.php</code></p>
+    </section>
+
+    <section>
+        <h2>Generic Password Reset Flow (by Email)</h2>
+        <div class="mermaid">
+flowchart TD
+    A[forgot_password.php\nForm POST send_reset_link_btn] --> B[send_reset_link.php]
+    B -->|Find account by email| C{Found?}
+    C -- No --> D[Redirect back with error]
+    C -- Yes --> E[Generate token + expiry\nPersist token]
+    E --> F[PHPMailer send link]
+    F --> G[reset_password.php?token]
+    G -->|Form submit| H[process_reset_password.php or handler]
+        </div>
+        <p class="small">Files: <code>forgot_password.php</code>, <code>send_reset_link.php</code>, <code>reset_password.php</code></p>
+    </section>
+
+    <section>
+        <h2>Fingerprint Attendance Flow (ESP32 + Web UI)</h2>
+        <div class="mermaid">
+flowchart TD
+    subgraph Device
+      A1[ESP32 + Sensor]\nFirmware handles matching or image capture --> A2[Expose /matchFingerprint or provide ID]
+    end
+
+    subgraph Browser (Kiosk)
+      B1[index.php JS]\nPoll `${ESP32_URL}/matchFingerprint` --> B2{status}
+      B2 -- success --> B3[processAttendance(fingerprintId)]
+      B2 -- waiting/not_found/error --> B4[Update UI status]
+    end
+
+    B3 -->|POST JSON { fingerprintId }| C[process_attendance.php]
+    C -->|Find student_assistant by fingerprint_id| D{Open attendance today?}
+    D -- Yes --> E[Update time_out, status=Completed, day]
+    D -- No --> F[Insert time_in, status=Present, day]
+    E --> G[JSON success + summary]
+    F --> G
+    G --> B1
+        </div>
+        <p class="small">Files: <code>index.php</code>, <code>process_attendance.php</code></p>
+    </section>
+
+</body>
+</html>
+
+

@@ -1,4 +1,5 @@
 #include <WiFi.h>
+#include <WiFiClientSecure.h>
 #include <HTTPClient.h>
 #include <Adafruit_Fingerprint.h>
 #include <WebServer.h>
@@ -7,7 +8,8 @@
 
 const char* ssid = "No Internet";
 const char* password = "Pldtnitoto16!";
-const char* serverUrl = "https://192.168.1.8/Thesis/fingerprint.php"; // Pc ip address with xampp
+const char* serverUrl = "https://samswit.free.nf/fingerprint.php"; // Pc ip address with xampp
+
 
 // DY50 uses Hardware Serial2 (pins 16,17 on ESP32)
 Adafruit_Fingerprint finger = Adafruit_Fingerprint(&Serial2);
@@ -491,20 +493,69 @@ uint8_t getFingerprintID() {
 }
 
 void sendAttendance(uint16_t fingerID) {
-  if (WiFi.status() == WL_CONNECTED) {
-    HTTPClient http;
-    http.begin(serverUrl);
-    http.addHeader("Content-Type", "application/json");
-    
-    String jsonData = "{\"finger_id\":" + String(fingerID) + "}";
-    int httpCode = http.POST(jsonData);
-    
-    if (httpCode > 0) {
-      String response = http.getString();
-      Serial.println("Server response: " + response);
+    if (WiFi.status() != WL_CONNECTED) {
+        Serial.println("Not connected to WiFi; skipping sendAttendance");
+        return;
     }
-    http.end();
-  }
+
+    String jsonData = "{\"finger_id\":" + String(fingerID) + "}";
+    int httpCode = 0;
+    String response;
+
+    // 1) Try HTTPS first
+    {
+        Serial.println("[sendAttendance] Trying HTTPS...");
+        WiFiClientSecure client;
+        client.setInsecure();
+        HTTPClient http;
+        if (!http.begin(client, serverUrl)) {
+            Serial.println("[sendAttendance] http.begin(HTTPS) failed");
+        } else {
+            http.setUserAgent("ESP32-Attendance/1.0");
+            http.setTimeout(10000);
+            http.addHeader("Content-Type", "application/json");
+            http.addHeader("X-API-KEY", "f4b8d72c5a1e93b0d8762fe431c9a0fdb1c47e8259ab63d4fe20bc19d75e84a2");
+            httpCode = http.POST(jsonData);
+            if (httpCode > 0) {
+                response = http.getString();
+                Serial.printf("[sendAttendance][HTTPS] Code: %d\n", httpCode);
+                Serial.println("[sendAttendance][HTTPS] Response: " + response);
+                http.end();
+                return;
+            } else {
+                Serial.printf("[sendAttendance][HTTPS] Error: %d %s\n", httpCode, HTTPClient::errorToString(httpCode).c_str());
+            }
+            http.end();
+        }
+    }
+
+    // 2) Fallback to HTTP (some hosts or cores have HTTPS issues)
+    {
+        Serial.println("[sendAttendance] Falling back to HTTP...");
+        // Derive an http URL if serverUrl is https
+        String httpUrl = String(serverUrl);
+        httpUrl.replace("https://", "http://");
+
+        WiFiClient client;
+        HTTPClient http;
+        if (!http.begin(client, httpUrl)) {
+            Serial.println("[sendAttendance] http.begin(HTTP) failed");
+            return;
+        }
+        http.setUserAgent("ESP32-Attendance/1.0");
+        http.setTimeout(10000);
+        http.addHeader("Content-Type", "application/json");
+        http.addHeader("X-API-KEY", "f4b8d72c5a1e93b0d8762fe431c9a0fdb1c47e8259ab63d4fe20bc19d75e84a2");
+        httpCode = http.POST(jsonData);
+        if (httpCode > 0) {
+            response = http.getString();
+            Serial.printf("[sendAttendance][HTTP] Code: %d\n", httpCode);
+            Serial.println("[sendAttendance][HTTP] Response: " + response);
+        } else {
+            Serial.printf("[sendAttendance][HTTP] Error: %d %s\n", httpCode, HTTPClient::errorToString(httpCode).c_str());
+        }
+        http.end();
+    }
 }
 
 void loop() {

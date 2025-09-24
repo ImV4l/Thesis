@@ -2,8 +2,98 @@
 header('Content-Type: application/json');
 include('admin/config/dbcon.php');
 
+// Optional simple API key for device-authenticated requests
+$DEVICE_API_KEY = 'f4b8d72c5a1e93b0d8762fe431c9a0fdb1c47e8259ab63d4fe20bc19d75e84a2';
+
 $data = json_decode(file_get_contents('php://input'), true);
 
+// 1) ESP32 path: device sends a matched fingerprint ID and we toggle attendance
+if (
+    $_SERVER['REQUEST_METHOD'] === 'POST' &&
+    (isset($data['finger_id']) || isset($data['fingerprintId']))
+) {
+    $providedKey = isset($_SERVER['HTTP_X_API_KEY']) ? $_SERVER['HTTP_X_API_KEY'] : '';
+    if ($DEVICE_API_KEY && $providedKey !== $DEVICE_API_KEY) {
+        http_response_code(401);
+        echo json_encode([
+            'success' => false,
+            'message' => 'Unauthorized device'
+        ]);
+        exit;
+    }
+
+    $fingerprintId = isset($data['finger_id']) ? intval($data['finger_id']) : intval($data['fingerprintId']);
+    if (!$fingerprintId) {
+        echo json_encode([
+            'success' => false,
+            'message' => 'Invalid fingerprint ID'
+        ]);
+        exit;
+    }
+
+    try {
+        $sa_query = "SELECT id, first_name, last_name FROM student_assistant WHERE fingerprint_id = ?";
+        $stmt = mysqli_prepare($con, $sa_query);
+        mysqli_stmt_bind_param($stmt, "i", $fingerprintId);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+
+        if ($sa = mysqli_fetch_assoc($result)) {
+            $check_query = "SELECT * FROM attendance WHERE sa_id = ? AND date = CURDATE() ORDER BY time_in DESC LIMIT 1";
+            $check_stmt = mysqli_prepare($con, $check_query);
+            mysqli_stmt_bind_param($check_stmt, "i", $sa['id']);
+            mysqli_stmt_execute($check_stmt);
+            $check_result = mysqli_stmt_get_result($check_stmt);
+            $last_attendance = mysqli_fetch_assoc($check_result);
+
+            if (!$last_attendance) {
+                $query = "INSERT INTO attendance (sa_id, date, day, time_in, status) VALUES (?, CURDATE(), DAYNAME(CURDATE()), NOW(), 'Present')";
+                $stmt2 = mysqli_prepare($con, $query);
+                mysqli_stmt_bind_param($stmt2, "i", $sa['id']);
+                $action = 'Time In';
+            } else if (empty($last_attendance['time_out'])) {
+                $query = "UPDATE attendance SET time_out = NOW(), status = 'Completed' WHERE id = ?";
+                $stmt2 = mysqli_prepare($con, $query);
+                mysqli_stmt_bind_param($stmt2, "i", $last_attendance['id']);
+                $action = 'Time Out';
+            } else {
+                $query = "INSERT INTO attendance (sa_id, date, day, time_in, status) VALUES (?, CURDATE(), DAYNAME(CURDATE()), NOW(), 'Present')";
+                $stmt2 = mysqli_prepare($con, $query);
+                mysqli_stmt_bind_param($stmt2, "i", $sa['id']);
+                $action = 'Time In';
+            }
+
+            if (mysqli_stmt_execute($stmt2)) {
+                echo json_encode([
+                    'success' => true,
+                    'message' => $action . ' recorded successfully',
+                    'data' => [
+                        'sa_id' => $sa['id'],
+                        'name' => $sa['first_name'] . ' ' . $sa['last_name'],
+                        'action' => $action,
+                        'date' => date('Y-m-d'),
+                        'time' => date('H:i:s')
+                    ]
+                ]);
+            } else {
+                throw new Exception('Failed to record attendance');
+            }
+        } else {
+            echo json_encode([
+                'success' => false,
+                'message' => 'No matching Student Assistant found'
+            ]);
+        }
+    } catch (Exception $e) {
+        echo json_encode([
+            'success' => false,
+            'message' => 'Error: ' . $e->getMessage()
+        ]);
+    }
+    exit;
+}
+
+// 2) Template path: a client sends a captured template (hex) and we match against DB
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($data['template'])) {
     $template = $data['template'];
 
